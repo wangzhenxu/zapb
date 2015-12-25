@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ZpCompanyInfo">
+
+	<resultMap type="ZpCompanyInfo" id="zpCompanyInfoMap">
+	        	<id  column="company_id" property="companyId"></id>
+	        	<result  column="name" property="name" />
+	        	<result  column="address" property="address" />
+	        	<result  column="desc" property="desc" />
+	        	<result  column="more_desc" property="moreDesc" />
+	        	<result  column="scale_id" property="scaleId" />
+	        	<result  column="regtime" property="regtime" />
+	        	<result  column="financing_level_id" property="financingLevelId" />
+	        	<result  column="industry_id" property="industryId" />
+	        	<result  column="company_nature" property="companyNature" />
+	        	<result  column="in_person" property="inPerson" />
+	        	<result  column="last_update_time" property="lastUpdateTime" />
+	        	<result  column="is_delete" property="isDelete" />
+	        	<result  column="coord_x" property="coordX" />
+	        	<result  column="coord_y" property="coordY" />
+	        	<result  column="area_id" property="areaId" />
+	        	
+        	    <result  column="inPersonName" property="inPersonName" />
+	</resultMap>
+	
+	<!-- 查询 客户信息列表 -->
+	<select id="queryZpCompanyInfoList" resultMap="zpCompanyInfoMap">
+		SELECT
+						 		ci.company_id,
+			        	
+						 		ci.name,
+			        	
+						 		ci.address,
+			        	
+						 		ci.desc,
+			        	
+						 		ci.more_desc,
+			        	
+						 		ci.scale_id,
+			        	
+						 		ci.regtime,
+			        	
+						 		ci.financing_level_id,
+			        	
+						 		ci.industry_id,
+			        	
+						 		ci.company_nature,
+			        	
+						 		ci.in_person,
+			        	
+						 		ci.last_update_time,
+			        	
+						 		ci.is_delete,
+			        	
+						 		ci.coord_x,
+			        	
+						 		ci.coord_y,
+						 		
+						 		ci.area_id,
+			        	
+								a.username as inPersonName
+		FROM
+			zp_company_info ci
+			left join account a on a.account_id = ci.in_person
+			
+		<where>
+							<if test="qtype != null and qtype=='like'">
+									<if test="name != null and name !='' ">
+							        		AND ci.name like '%${name}%'
+							        </if>
+							</if>
+							<if test="qtype == null and name != null and name !='' ">
+							        		AND ci.name =#{name}
+							</if>
+				        	<if test="address != null and address !='' ">
+				        		AND ci.address=#{address} 
+				        	</if>
+				        	<if test="desc != null and desc !='' ">
+				        		AND ci.desc=#{desc} 
+				        	</if>
+				        	<if test="moreDesc != null and moreDesc !='' ">
+				        		AND ci.more_desc=#{moreDesc} 
+				        	</if>
+				        	<if test="scaleId != null and scaleId !='' ">
+				        		AND ci.scale_id=#{scaleId} 
+				        	</if>
+				        	<if test="regtime != null and regtime !='' ">
+				        		AND ci.regtime=#{regtime} 
+				        	</if>
+				        	<if test="financingLevelId != null and financingLevelId !='' ">
+				        		AND ci.financing_level_id=#{financingLevelId} 
+				        	</if>
+				        	<if test="industryId != null and industryId !='' ">
+				        		AND ci.industry_id=#{industryId} 
+				        	</if>
+				        	<if test="companyNature != null and companyNature !='' ">
+				        		AND ci.company_nature=#{companyNature} 
+				        	</if>
+				        	<if test="inPerson != null and inPerson !='' ">
+				        		AND ci.in_person=#{inPerson} 
+				        	</if>
+				        	<if test="lastUpdateTime != null and lastUpdateTime !='' ">
+				        		AND ci.last_update_time=#{lastUpdateTime} 
+				        	</if>
+				        	<if test="isDelete != null and isDelete !='' ">
+				        		AND ci.is_delete=#{isDelete} 
+				        	</if>
+				        	<if test="coordX != null and coordX !='' ">
+				        		AND ci.coord_x=#{coordX} 
+				        	</if>
+				        	<if test="coordY != null and coordY !='' ">
+				        		AND ci.coord_y=#{coordY} 
+				        	</if>
+				        	<if test="areaId != null and areaId !='' ">
+				        		AND ci.area_id=#{areaId} 
+				        	</if>
+					
+					<if test="ids !=null">
+				         AND ci.company_id IN
+						    <foreach  item="item" collection="ids"  index="index" open="(" separator="," close=")"> 
+									 ${item} 
+							</foreach>
+			        </if>
+		</where>
+		ORDER BY ci.company_id desc 
+		<if test="skipResults!=null">
+				limit #{skipResults} ,#{maxResults}
+		</if>
+		
+	</select>
+	
+	<!-- 查询 客户信息列表条数 -->
+	<select id="getZpCompanyInfoListCount" resultType="int">
+		SELECT
+			count(1)
+		FROM
+			zp_company_info ci
+		<where>
+							<if test="qtype != null and qtype=='like'">
+									<if test="name != null and name !='' ">
+							        		AND ci.name like '%${name}%'
+							        </if>
+							</if>
+							<if test="qtype == null and name != null and name !='' ">
+							        		AND ci.name =#{name}
+							</if>
+				        	<if test="address != null and address !=''">
+				        		AND ci.address=#{address} 
+				        	</if>
+				        	<if test="desc != null and desc !=''">
+				        		AND ci.desc=#{desc} 
+				        	</if>
+				        	<if test="moreDesc != null and moreDesc !=''">
+				        		AND ci.more_desc=#{moreDesc} 
+				        	</if>
+				        	<if test="scaleId != null and scaleId !=''">
+				        		AND ci.scale_id=#{scaleId} 
+				        	</if>
+				        	<if test="regtime != null and regtime !=''">
+				        		AND ci.regtime=#{regtime} 
+				        	</if>
+				        	<if test="financingLevelId != null and financingLevelId !=''">
+				        		AND ci.financing_level_id=#{financingLevelId} 
+				        	</if>
+				        	<if test="industryId != null and industryId !=''">
+				        		AND ci.industry_id=#{industryId} 
+				        	</if>
+				        	<if test="companyNature != null and companyNature !=''">
+				        		AND ci.company_nature=#{companyNature} 
+				        	</if>
+				        	<if test="inPerson != null and inPerson !=''">
+				        		AND ci.in_person=#{inPerson} 
+				        	</if>
+				        	<if test="lastUpdateTime != null and lastUpdateTime !=''">
+				        		AND ci.last_update_time=#{lastUpdateTime} 
+				        	</if>
+				        	<if test="isDelete != null and isDelete !=''">
+				        		AND ci.is_delete=#{isDelete} 
+				        	</if>
+				        	<if test="coordX != null and coordX !=''">
+				        		AND ci.coord_x=#{coordX} 
+				        	</if>
+				        	<if test="coordY != null and coordY !=''">
+				        		AND ci.coord_y=#{coordY} 
+				        	</if>
+				        	<if test="areaId != null and areaId !=''">
+				        		AND ci.area_id=#{areaId} 
+				        	</if>
+				<if test="ids !=null">
+				         AND ci.company_id IN
+						    <foreach  item="item" collection="ids"  index="index" open="(" separator="," close=")"> 
+									 ${item} 
+							</foreach>
+			        </if>
+		</where>
+	</select>
+	
+	
+	<!-- 添加 客户信息 -->
+	<insert id="addZpCompanyInfo" flushCache="true" useGeneratedKeys="true" keyProperty="companyId">
+		INSERT INTO zp_company_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		        	<if test="name != null">
+		        		name,
+		        	</if>
+		        	<if test="address != null">
+		        		address,
+		        	</if>
+		        	<if test="desc != null">
+		        		`desc`,
+		        	</if>
+		        	<if test="moreDesc != null">
+		        		more_desc,
+		        	</if>
+		        	<if test="scaleId != null">
+		        		scale_id,
+		        	</if>
+		        	<if test="regtime != null">
+		        		regtime,
+		        	</if>
+		        	<if test="financingLevelId != null">
+		        		financing_level_id,
+		        	</if>
+		        	<if test="industryId != null">
+		        		industry_id,
+		        	</if>
+		        	<if test="companyNature != null">
+		        		company_nature,
+		        	</if>
+		        	<if test="inPerson != null">
+		        		in_person,
+		        	</if>
+		        	<if test="lastUpdateTime != null">
+		        		last_update_time,
+		        	</if>
+		        	<if test="isDelete != null">
+		        		is_delete,
+		        	</if>
+		        	<if test="coordX != null">
+		        		coord_x,
+		        	</if>
+		        	<if test="coordY != null">
+		        		coord_y,
+		        	</if>
+		        	<if test="areaId != null">
+		        		area_id,
+		        	</if>
+		        	
+		        	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			        	<if test="name != null">
+			        		#{name},
+			        	</if>
+			        	<if test="address != null">
+			        		#{address},
+			        	</if>
+			        	<if test="desc != null">
+			        		#{desc},
+			        	</if>
+			        	<if test="moreDesc != null">
+			        		#{moreDesc},
+			        	</if>
+			        	<if test="scaleId != null">
+			        		#{scaleId},
+			        	</if>
+			        	<if test="regtime != null">
+			        		#{regtime},
+			        	</if>
+			        	<if test="financingLevelId != null">
+			        		#{financingLevelId},
+			        	</if>
+			        	<if test="industryId != null">
+			        		#{industryId},
+			        	</if>
+			        	<if test="companyNature != null">
+			        		#{companyNature},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		#{inPerson},
+			        	</if>
+			        	<if test="lastUpdateTime != null">
+			        		#{lastUpdateTime},
+			        	</if>
+			        	<if test="isDelete != null">
+			        		#{isDelete},
+			        	</if>
+			        	<if test="coordX != null">
+			        		#{coordX},
+			        	</if>
+			        	<if test="coordY != null">
+			        		#{coordY},
+			        	</if>
+			        	<if test="areaId != null">
+			        		#{areaId},
+			        	</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改 客户信息 -->
+	<update id="updateZpCompanyInfo" >
+		UPDATE  zp_company_info
+		<trim prefix="set" suffixOverrides=",">
+			        	<if test="name != null">
+			        		name=#{name},
+			        	</if>
+			        	<if test="address != null">
+			        		address=#{address},
+			        	</if>
+			        	<if test="desc != null">
+			        		`desc`=#{desc},
+			        	</if>
+			        	<if test="moreDesc != null">
+			        		more_desc=#{moreDesc},
+			        	</if>
+			        	<if test="scaleId != null">
+			        		scale_id=#{scaleId},
+			        	</if>
+			        	<if test="regtime != null">
+			        		regtime=#{regtime},
+			        	</if>
+			        	<if test="financingLevelId != null">
+			        		financing_level_id=#{financingLevelId},
+			        	</if>
+			        	<if test="industryId != null">
+			        		industry_id=#{industryId},
+			        	</if>
+			        	<if test="companyNature != null">
+			        		company_nature=#{companyNature},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		in_person=#{inPerson},
+			        	</if>
+			        	<if test="lastUpdateTime != null">
+			        		last_update_time=#{lastUpdateTime},
+			        	</if>
+			        	<if test="isDelete != null">
+			        		is_delete=#{isDelete},
+			        	</if>
+			        	<if test="coordX != null">
+			        		coord_x=#{coordX},
+			        	</if>
+			        	<if test="coordY != null">
+			        		coord_y=#{coordY},
+			        	</if>
+			        	<if test="areaId != null">
+			        		area_id=#{areaId},
+			        	</if>
+		</trim>
+		WHERE company_id=#{companyId}
+	</update>
+
+	<!-- 删除  客户信息 -->
+	<delete id="deleteZpCompanyInfo">
+		DELETE FROM zp_company_info 
+		<where>
+				        	<if test="companyId != null">
+				        		AND company_id=#{companyId} 
+				        	</if>
+				        	<if test="name != null">
+				        		AND name=#{name} 
+				        	</if>
+				        	<if test="address != null">
+				        		AND address=#{address} 
+				        	</if>
+				        	<if test="desc != null">
+				        		AND desc=#{desc} 
+				        	</if>
+				        	<if test="moreDesc != null">
+				        		AND more_desc=#{moreDesc} 
+				        	</if>
+				        	<if test="scaleId != null">
+				        		AND scale_id=#{scaleId} 
+				        	</if>
+				        	<if test="regtime != null">
+				        		AND regtime=#{regtime} 
+				        	</if>
+				        	<if test="financingLevelId != null">
+				        		AND financing_level_id=#{financingLevelId} 
+				        	</if>
+				        	<if test="industryId != null">
+				        		AND industry_id=#{industryId} 
+				        	</if>
+				        	<if test="companyNature != null">
+				        		AND company_nature=#{companyNature} 
+				        	</if>
+				        	<if test="inPerson != null">
+				        		AND in_person=#{inPerson} 
+				        	</if>
+				        	<if test="lastUpdateTime != null">
+				        		AND last_update_time=#{lastUpdateTime} 
+				        	</if>
+				        	<if test="isDelete != null">
+				        		AND is_delete=#{isDelete} 
+				        	</if>
+				        	<if test="coordX != null">
+				        		AND coord_x=#{coordX} 
+				        	</if>
+				        	<if test="coordY != null">
+				        		AND coord_y=#{coordY} 
+				        	</if>
+				        	<if test="areaId != null">
+				        		AND area_id=#{areaId} 
+				        	</if>
+		</where>
+	</delete>
+	
+	<!-- 获得  客户信息 -->
+	<select id="getZpCompanyInfoById" resultMap="zpCompanyInfoMap">
+		SELECT
+						 		ci.company_id,
+						 		ci.name,
+						 		ci.address,
+						 		ci.desc,
+						 		ci.more_desc,
+						 		ci.scale_id,
+						 		ci.regtime,
+						 		ci.financing_level_id,
+						 		ci.industry_id,
+						 		ci.company_nature,
+						 		ci.in_person,
+						 		ci.last_update_time,
+						 		ci.is_delete,
+						 		ci.coord_x,
+						 		ci.coord_y,
+						 		ci.area_id,
+								a.username as inPersonName
+		FROM
+			zp_company_info ci
+			left join account a on a.account_id = ci.in_person
+		WHERE 
+		ci.company_id=#{companyId}
+		
+	</select>
+
+</mapper>

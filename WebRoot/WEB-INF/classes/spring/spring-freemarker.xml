@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 配置freeMarker的模板路径 -->
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath">
+			<value>${freemarker.templateLoaderPath}</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>${freemarker.defaultEncoding}</value>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">${freemarker.conf.template_update_delay}</prop>
+			</props>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+			</map>
+		</property>
+	</bean>
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+
+	<!-- 视图解析器 -->
+	<bean id="viewResolverFtl"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="contentType" value="${freemarker.view.contentType}" />
+		<property name="suffix" value="${freemarker.view.suffix}" />
+		<property name="cache" value="${freemarker.view.cache}" />
+		<property name="exposeSpringMacroHelpers" value="${freemarker.view.exposeSpringMacroHelpers}" />
+		<property name="exposeSessionAttributes" value="${freemarker.view.exposeSessionAttributes}" />
+		<property name="exposeRequestAttributes" value="${freemarker.view.exposeRequestAttributes}" />
+		<property name="allowSessionOverride" value="${freemarker.view.allowSessionOverride}" />
+		<property name="attributesMap" ref="freemarkerStaticModels" />
+	</bean>
+
+	<!-- 在freemarker中使用静态类 -->
+	<bean id="freemarkerStaticModelsProps"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:conf/freemarker-static.properties" />
+	</bean>
+	<bean id="freemarkerStaticModels" class="com.loiot.baqi.view.FreemarkerStaticModels"
+		factory-method="getInstance">
+		<property name="staticModels" ref="freemarkerStaticModelsProps" />
+	</bean>
+
+
+</beans>

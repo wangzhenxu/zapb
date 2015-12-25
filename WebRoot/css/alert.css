@@ -1,0 +1,13 @@
+﻿#over_container{
+min-width: 300px; /* Dialog will be no smaller than this */
+background:#DDEDFB;
+border:1px solid #0099CC;
+color: #000;
+}
+#over_message{
+text-align:center; 
+padding:10px 20px;}
+
+#over_container.over_3{
+background:#FFF2F2;
+border:1px solid #FF8080;}

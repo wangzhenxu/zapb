@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AccountExpandInfo">
+
+	<resultMap type="AccountExpandInfo" id="accountExpandInfoMap">
+	        	<id  column="expand_id" property="expandId"></id>
+	        	<result  column="account_id" property="accountId" />
+	        	<result  column="audit_position_id" property="auditPositionId" />
+	        	<result  column="real_name" property="realName" />
+	        	<result  column="nick_name" property="nickName" />
+	        	<result  column="iphone" property="iphone" />
+	        	<result  column="email" property="email" />
+	        	<result  column="sex_id" property="sexId" />
+	        	<result  column="payment_type_id" property="paymentTypeId" />
+	        	<result  column="payment_code" property="paymentCode" />
+	        	<result  column="in_time" property="inTime" />
+	        	<result  column="in_person" property="inPerson" />
+	        	<result  column="last_login_time" property="lastLoginTime" />
+	        	<result  column="idcard" property="idcard" />
+	        	<result  column="is_accept_audit" property="isAcceptAudit" />
+	        	<result  column="curr_money" property="currMoney" />
+			<result  column="inPersonName" property="inPersonName" />
+	</resultMap>
+	
+	<!-- 查询 个人信息列表 -->
+	<select id="queryAccountExpandInfoList" resultMap="accountExpandInfoMap">
+		SELECT
+			<include refid="getParamSQL"></include>
+			<include refid="getListSQL"></include>
+		ORDER BY ei.expand_id desc 
+		<if test="skipResults!=null">
+				limit #{skipResults} ,#{maxResults}
+		</if>
+		
+	</select>
+	
+	<!-- 查询 个人信息列表条数 -->
+	<select id="getAccountExpandInfoListCount" resultType="int">
+		SELECT
+			count(1)
+			<include refid="getListSQL"></include>
+	</select>
+	
+	
+	<!-- 添加 个人信息 -->
+	<insert id="addAccountExpandInfo" flushCache="true" useGeneratedKeys="true" keyProperty="expandId">
+		INSERT INTO account_expand_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		        	<if test="accountId != null">
+		        		account_id,
+		        	</if>
+		        	<if test="auditPositionId != null">
+		        		audit_position_id,
+		        	</if>
+		        	<if test="realName != null">
+		        		real_name,
+		        	</if>
+		        	<if test="nickName != null">
+		        		nick_name,
+		        	</if>
+		        	<if test="iphone != null">
+		        		iphone,
+		        	</if>
+		        	<if test="email != null">
+		        		email,
+		        	</if>
+		        	<if test="sexId != null">
+		        		sex_id,
+		        	</if>
+		        	<if test="paymentTypeId != null">
+		        		payment_type_id,
+		        	</if>
+		        	<if test="paymentCode != null">
+		        		payment_code,
+		        	</if>
+		        	<if test="inTime != null">
+		        		in_time,
+		        	</if>
+		        	<if test="inPerson != null">
+		        		in_person,
+		        	</if>
+		        	<if test="lastLoginTime != null">
+		        		last_login_time,
+		        	</if>
+		        	<if test="idcard != null">
+		        		idcard,
+		        	</if>
+		        	<if test="isAcceptAudit != null">
+		        		is_accept_audit,
+		        	</if>
+		        	<if test="currMoney != null">
+		        		curr_money,
+		        	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			        	<if test="accountId != null">
+			        		#{accountId},
+			        	</if>
+			        	<if test="auditPositionId != null">
+			        		#{auditPositionId},
+			        	</if>
+			        	<if test="realName != null">
+			        		#{realName},
+			        	</if>
+			        	<if test="nickName != null">
+			        		#{nickName},
+			        	</if>
+			        	<if test="iphone != null">
+			        		#{iphone},
+			        	</if>
+			        	<if test="email != null">
+			        		#{email},
+			        	</if>
+			        	<if test="sexId != null">
+			        		#{sexId},
+			        	</if>
+			        	<if test="paymentTypeId != null">
+			        		#{paymentTypeId},
+			        	</if>
+			        	<if test="paymentCode != null">
+			        		#{paymentCode},
+			        	</if>
+			        	<if test="inTime != null">
+			        		#{inTime},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		#{inPerson},
+			        	</if>
+			        	<if test="lastLoginTime != null">
+			        		#{lastLoginTime},
+			        	</if>
+			        	<if test="idcard != null">
+			        		#{idcard},
+			        	</if>
+			        	<if test="isAcceptAudit != null">
+			        		#{isAcceptAudit},
+			        	</if>
+			        	<if test="currMoney != null">
+			        		#{currMoney},
+			        	</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改 职位扩展信息 -->
+	<update id="updatePostionInfo" >
+		UPDATE  account_expand_info SET
+		audit_position_id=#{auditPositionId}
+		WHERE account_id=#{accountId}
+	</update>
+	
+	<!-- 修改 个人信息 -->
+	<update id="updateAccountExpandInfo" >
+		UPDATE  account_expand_info
+		<trim prefix="set" suffixOverrides=",">
+			        	<if test="accountId != null">
+			        		account_id=#{accountId},
+			        	</if>
+			        	<if test="auditPositionId != null">
+			        		audit_position_id=#{auditPositionId},
+			        	</if>
+			        	<if test="realName != null">
+			        		real_name=#{realName},
+			        	</if>
+			        	<if test="nickName != null">
+			        		nick_name=#{nickName},
+			        	</if>
+			        	<if test="iphone != null">
+			        		iphone=#{iphone},
+			        	</if>
+			        	<if test="email != null">
+			        		email=#{email},
+			        	</if>
+			        	<if test="sexId != null">
+			        		sex_id=#{sexId},
+			        	</if>
+			        	<if test="paymentTypeId != null">
+			        		payment_type_id=#{paymentTypeId},
+			        	</if>
+			        	<if test="paymentCode != null">
+			        		payment_code=#{paymentCode},
+			        	</if>
+			        	<if test="inTime != null">
+			        		in_time=#{inTime},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		in_person=#{inPerson},
+			        	</if>
+			        	<if test="lastLoginTime != null">
+			        		last_login_time=#{lastLoginTime},
+			        	</if>
+			        	<if test="idcard != null">
+			        		idcard=#{idcard},
+			        	</if>
+			        	<if test="isAcceptAudit != null">
+			        		is_accept_audit=#{isAcceptAudit},
+			        	</if>
+			        	<if test="currMoney != null">
+			        		curr_money=#{currMoney},
+			        	</if>
+		</trim>
+		WHERE expand_id=#{expandId}
+	</update>
+
+	<!-- 删除  个人信息 -->
+	<delete id="deleteAccountExpandInfo">
+		DELETE FROM account_expand_info 
+		<where>
+				        	<if test="expandId != null">
+				        		AND expand_id=#{expandId} 
+				        	</if>
+				        	<if test="accountId != null">
+				        		AND account_id=#{accountId} 
+				        	</if>
+				        	<if test="auditPositionId != null">
+				        		AND audit_position_id=#{auditPositionId} 
+				        	</if>
+				        	<if test="realName != null">
+				        		AND real_name=#{realName} 
+				        	</if>
+				        	<if test="nickName != null">
+				        		AND nick_name=#{nickName} 
+				        	</if>
+				        	<if test="iphone != null">
+				        		AND iphone=#{iphone} 
+				        	</if>
+				        	<if test="email != null">
+				        		AND email=#{email} 
+				        	</if>
+				        	<if test="sexId != null">
+				        		AND sex_id=#{sexId} 
+				        	</if>
+				        	<if test="paymentTypeId != null">
+				        		AND payment_type_id=#{paymentTypeId} 
+				        	</if>
+				        	<if test="paymentCode != null">
+				        		AND payment_code=#{paymentCode} 
+				        	</if>
+				        	<if test="inTime != null">
+				        		AND in_time=#{inTime} 
+				        	</if>
+				        	<if test="inPerson != null">
+				        		AND in_person=#{inPerson} 
+				        	</if>
+				        	<if test="lastLoginTime != null">
+				        		AND last_login_time=#{lastLoginTime} 
+				        	</if>
+				        	<if test="idcard != null">
+				        		AND idcard=#{idcard} 
+				        	</if>
+				        	<if test="isAcceptAudit != null">
+				        		AND is_accept_audit=#{isAcceptAudit} 
+				        	</if>
+				        	<if test="currMoney != null">
+				        		AND curr_money=#{currMoney} 
+				        	</if>
+		</where>
+	</delete>
+	
+	<!-- 获得  个人信息 -->
+	<select id="getAccountExpandInfoById" resultMap="accountExpandInfoMap">
+		SELECT
+			<include refid="getParamSQL"></include>
+			<include refid="getListSQL"></include>
+		
+	</select>
+	
+	<!-- getListSQL -->
+	<sql id="getListSQL">
+			FROM
+			account_expand_info  ei
+			LEFT JOIN account a ON a.account_id =ei.in_person
+		<where>
+					<if test="qtype != null and qtype=='like'">
+						<if test="nameT != null and nameT !='' ">
+				        		AND (ei.real_name like '%${nameT}%' or ei.nick_name like '%${nameT}%')
+			        	</if>
+					</if>
+				        	<if test="expandId != null and expandId !='' ">
+				        		AND ei.expand_id=#{expandId} 
+				        	</if>
+				        	<if test="accountId != null and accountId !='' ">
+				        		AND ei.account_id=#{accountId} 
+				        	</if>
+				        	<if test="auditPositionId != null and auditPositionId !='' ">
+				        		AND ei.audit_position_id=#{auditPositionId} 
+				        	</if>
+				        	<if test="realName != null and realName !='' ">
+				        		AND ei.real_name=#{realName} 
+				        	</if>
+				        	<if test="nickName != null and nickName !='' ">
+				        		AND ei.nick_name=#{nickName} 
+				        	</if>
+				        	<if test="iphone != null and iphone !='' ">
+				        		AND ei.iphone=#{iphone} 
+				        	</if>
+				        	<if test="email != null and email !='' ">
+				        		AND ei.email=#{email} 
+				        	</if>
+				        	<if test="sexId != null and sexId !='' ">
+				        		AND ei.sex_id=#{sexId} 
+				        	</if>
+				        	<if test="paymentTypeId != null and paymentTypeId !='' ">
+				        		AND ei.payment_type_id=#{paymentTypeId} 
+				        	</if>
+				        	<if test="paymentCode != null and paymentCode !='' ">
+				        		AND ei.payment_code=#{paymentCode} 
+				        	</if>
+				        	<if test="inTime != null and inTime !='' ">
+				        		AND ei.in_time=#{inTime} 
+				        	</if>
+				        	<if test="inPerson != null and inPerson !='' ">
+				        		AND ei.in_person=#{inPerson} 
+				        	</if>
+				        	<if test="lastLoginTime != null and lastLoginTime !='' ">
+				        		AND ei.last_login_time=#{lastLoginTime} 
+				        	</if>
+				        	<if test="idcard != null and idcard !='' ">
+				        		AND ei.idcard=#{idcard} 
+				        	</if>
+				        	<if test="isAcceptAudit != null and isAcceptAudit !='' ">
+				        		AND ei.is_accept_audit=#{isAcceptAudit} 
+				        	</if>
+				        	<if test="currMoney != null and currMoney !='' ">
+				        		AND ei.curr_money=#{currMoney} 
+				        	</if>
+					
+					<if test="ids !=null">
+				         AND ei.expand_id IN
+						    <foreach  item="item" collection="ids"  index="index" open="(" separator="," close=")"> 
+									 ${item} 
+							</foreach>
+			        </if>
+		</where>
+	</sql>
+	
+	<!-- sql 参数 -->
+	<sql id="getParamSQL">
+						 		ei.expand_id,
+						 		ei.account_id,
+						 		ei.audit_position_id,
+						 		ei.real_name,
+						 		ei.nick_name,
+						 		ei.iphone,
+						 		ei.email,
+						 		ei.sex_id,
+						 		ei.payment_type_id,
+						 		ei.payment_code,
+						 		ei.in_time,
+						 		ei.in_person,
+						 		ei.last_login_time,
+						 		ei.idcard,
+						 		ei.is_accept_audit,
+						 		ei.curr_money
+								,a.username as inPersonName
+	</sql>
+
+</mapper>
+

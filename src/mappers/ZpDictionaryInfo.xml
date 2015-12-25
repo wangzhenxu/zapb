@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ZpDictionaryInfo">
+
+	<resultMap type="ZpDictionaryInfo" id="zpDictionaryInfoMap">
+	        	<id  column="dictionary_id" property="dictionaryId"></id>
+	        	<result  column="type" property="type" />
+	        	<result  column="name" property="name" />
+	        	<result  column="show_name" property="showName" />
+	        	<result  column="value" property="value" />
+	</resultMap>
+	
+	<!-- 查询 字典信息列表 -->
+	<select id="queryZpDictionaryInfoList" resultMap="zpDictionaryInfoMap">
+		SELECT
+						 		zp_dictionary_info.dictionary_id,
+			        	
+						 		zp_dictionary_info.type,
+			        	
+						 		zp_dictionary_info.name,
+			        	
+						 		zp_dictionary_info.sort,
+			        	
+						 		zp_dictionary_info.value,
+						 		
+						 		zp_dictionary_info.show_name
+			        	
+		FROM
+			zp_dictionary_info
+		<where>
+				<if test="qtype != null and qtype=='like'">
+				</if>
+				        	<if test="type != null and type !='' ">
+				        		AND zp_dictionary_info.type=#{type} 
+				        	</if>
+				        	<if test="name != null and name !='' ">
+				        		AND zp_dictionary_info.name=#{name} 
+				        	</if>
+				        	<if test="sort != null and sort !='' ">
+				        		AND zp_dictionary_info.sort=#{sort} 
+				        	</if>
+				        	<if test="value != null and value !='' ">
+				        		AND zp_dictionary_info.value=#{value} 
+				        	</if>
+				        		<if test="showName != null and showName !='' ">
+				        		AND zp_dictionary_info.show_name=#{showName} 
+				        	</if>
+		</where>
+		ORDER BY type asc, sort asc 
+		<if test="skipResults!=null">
+				limit #{skipResults} ,#{maxResults}
+		</if>
+		
+	</select>
+	
+	<!-- 查询 字典信息列表条数 -->
+	<select id="getZpDictionaryInfoListCount" resultType="int">
+		SELECT
+			count(1)
+		FROM
+			zp_dictionary_info
+		<where>
+				<if test="qtype != null and qtype=='like'">
+				</if>
+				        	<if test="type != null and type !=''">
+				        		AND zp_dictionary_info.type=#{type} 
+				        	</if>
+				        	<if test="name != null and name !=''">
+				        		AND zp_dictionary_info.name=#{name} 
+				        	</if>
+				        	<if test="sort != null and sort !=''">
+				        		AND zp_dictionary_info.sort=#{sort} 
+				        	</if>
+				        	<if test="value != null and value !=''">
+				        		AND zp_dictionary_info.value=#{value} 
+				        	</if>
+				        	<if test="showName != null and showName !=''">
+				        		AND zp_dictionary_info.showName=#{showName} 
+				        	</if>
+				        	
+		</where>
+	</select>
+	
+	
+	<!-- 添加 字典信息 -->
+	<insert id="addZpDictionaryInfo" flushCache="true" useGeneratedKeys="true" keyProperty="dictionaryId">
+		INSERT INTO zp_dictionary_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		        	<if test="type != null">
+		        		type,
+		        	</if>
+		        	<if test="name != null">
+		        		name,
+		        	</if>
+		        	<if test="sort != null">
+		        		sort,
+		        	</if>
+		        	<if test="value != null">
+		        		value,
+		        	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			        	<if test="type != null">
+			        		#{type},
+			        	</if>
+			        	<if test="name != null">
+			        		#{name},
+			        	</if>
+			        	<if test="sort != null">
+			        		#{sort},
+			        	</if>
+			        	<if test="value != null">
+			        		#{value},
+			        	</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改 字典信息 -->
+	<update id="updateZpDictionaryInfo" >
+		UPDATE  zp_dictionary_info
+		<trim prefix="set" suffixOverrides=",">
+			        	<if test="type != null">
+			        		type=#{type},
+			        	</if>
+			        	<if test="name != null">
+			        		name=#{name},
+			        	</if>
+			        	<if test="sort != null">
+			        		sort=#{sort},
+			        	</if>
+			        	<if test="value != null">
+			        		value=#{value},
+			        	</if>
+		</trim>
+		WHERE dictionary_id=#{dictionaryId}
+	</update>
+
+	<!-- 删除  字典信息 -->
+	<delete id="deleteZpDictionaryInfo">
+		DELETE FROM zp_dictionary_info 
+		<where>
+				        	<if test="dictionaryId != null">
+				        		AND dictionary_id=#{dictionaryId} 
+				        	</if>
+				        	<if test="type != null">
+				        		AND type=#{type} 
+				        	</if>
+				        	<if test="name != null">
+				        		AND name=#{name} 
+				        	</if>
+				        	<if test="sort != null">
+				        		AND sort=#{sort} 
+				        	</if>
+				        	<if test="value != null">
+				        		AND value=#{value} 
+				        	</if>
+		</where>
+	</delete>
+	
+	<!-- 获得  字典信息 -->
+	<select id="getZpDictionaryInfoById" resultMap="zpDictionaryInfoMap">
+		SELECT
+						 		ZpDictionaryInfo.dictionary_id,
+						 		ZpDictionaryInfo.type,
+						 		ZpDictionaryInfo.name,
+						 		ZpDictionaryInfo.sort,
+						 		ZpDictionaryInfo.value
+		FROM
+			zp_dictionary_info
+		WHERE 
+		zp_dictionary_info.dictionary_id=#{dictionaryId}
+		
+	</select>
+
+</mapper>

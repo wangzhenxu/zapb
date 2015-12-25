@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Role">
+
+	<resultMap type="Role" id="role">
+		<id column="role_id" property="roleId" />
+		<result column="role_name" property="roleName" />
+		<result column="role_str" property="roleStr" />
+	</resultMap>
+
+
+	<resultMap type="Role" id="rolePermission">
+		<id column="role_id" property="roleId" />
+		<result column="role_name" property="roleName" />
+		<result column="role_str" property="roleStr" />
+		<collection property="permissionList" ofType="Permission">
+			<id column="permission_id" property="permissionId" />
+			<result column="permission_name" property="permissionName" />
+			<result column="permission_str" property="permissionStr" />
+		</collection>
+	</resultMap>
+
+	<!-- 删除权限 -->
+	<delete id="deletePermission">
+		delete from role_permission where role_id=#{roleId}
+	</delete>
+
+	<!-- 新增角色 -->
+	<insert id="addPermission">
+		insert into
+		role_permission(role_id,permission_id)
+		values(#{roleId},#{permissionId})
+	</insert>
+
+
+	<!-- 新增角色 -->
+	<insert id="addRole" parameterType="Role">
+		insert into
+		role(role_name,role_str)
+		values(#{roleName},#{roleStr})
+		<selectKey resultType="long" keyProperty="roleId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<!-- 删除角色 -->
+	<delete id="deleteRole">
+		delete from role where role_id=#{roleId}
+	</delete>
+
+
+	<!-- 根据ID查询角色 -->
+	<select id="getRoleById" resultMap="rolePermission">
+		select
+		r.role_id,r.role_name,r.role_str,p.permission_id,p.permission_name,p.permission_str
+		from role r left join
+		role_permission rp on r.role_id=rp.role_id
+		left
+		join permission p on
+		rp.permission_id=p.permission_id
+		where
+		r.role_id=#{roleId}
+	</select>
+
+	<!-- 查询角色列表 -->
+	<select id="getRoleList" resultMap="role">
+		select *
+		<include refid="getRoleListSQL" />
+		order by role_id desc
+	</select>
+
+	<!-- 查询角色列表数量 -->
+	<select id="getRoleListCount" resultType="int">
+		select count(role_id)
+		<include refid="getRoleListSQL" />
+	</select>
+
+	<!-- getRoleListSQL -->
+	<sql id="getRoleListSQL">
+		from role
+		<where>
+			<if test="roleName != null">
+				role_name like '%${roleName}%'
+			</if>
+		</where>
+	</sql>
+
+</mapper>

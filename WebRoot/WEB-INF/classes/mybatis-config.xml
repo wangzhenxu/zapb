@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<!-- 属性定义 -->
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+
+	<!-- 配置缓存 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="multipleResultSetsEnabled" value="false" />
+	</settings>
+
+	<!-- 别名 -->
+	<typeAliases>
+		<typeAlias type="com.timeloit.pojo.Role" alias="Role" />
+		<typeAlias type="com.timeloit.pojo.Account" alias="Account" />
+		<typeAlias type="com.timeloit.pojo.Permission" alias="Permission" />
+		<typeAlias type="com.loiot.baqi.pojo.ZpDictionaryInfo" alias="ZpDictionaryInfo" />
+		<typeAlias type="com.loiot.baqi.pojo.ZpCompanyInfo" alias="ZpCompanyInfo" />
+		<typeAlias type="com.loiot.baqi.pojo.AccountExpandInfo" alias="AccountExpandInfo" />
+	    
+	    <typeAlias type="com.loiot.baqi.vo.JlAuditPersonList" alias="JlAuditPersonList" />
+		
+		
+		
+		
+		
+		
+		
+	</typeAliases>
+	
+	<!-- 配置分页拦截器 -->
+	<plugins>
+		<plugin interceptor="com.loiot.baqi.mybatis.PaginationInterceptor" />
+	</plugins>
+	
+</configuration>

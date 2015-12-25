@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/ftl/decorators">
+
+	<excludes>
+		<pattern>/css/*</pattern>
+		<pattern>/images/*</pattern>
+		<pattern>/js/*</pattern>
+		<pattern>/upfile/*</pattern>
+		<pattern>/login.action</pattern>
+		<pattern>/account/to*.action</pattern>
+		<pattern>/netinfo.jsp</pattern>
+		<pattern>/app/logCheck.action*</pattern>
+		<pattern>/app/identityCheck.action*</pattern>
+		<pattern>/app/maintenanceLogCheck.action*</pattern>
+		<pattern>/app/getAppLog.action*</pattern>
+		<pattern>/app/getAppUserLogList.action*</pattern>
+		
+		<pattern>/productApp/class/add.action*</pattern>
+		<pattern>/productApp/class/delete.action*</pattern>
+		<pattern>/productApp/class/update.action*</pattern>
+		<pattern>/productApp/class/getPoductAppByPacId.action*</pattern>
+		
+		 <pattern>/productApp/sub/delete.action*</pattern>
+		 <pattern>/productApp/sub/modifyPublishType.action*</pattern>
+		 <pattern>/productApp/sub/add.action*</pattern>
+		 <pattern>/productApp/sub/edit.action*</pattern>
+		
+	    <pattern>/cmsSolution/class/add.action*</pattern>
+	    <pattern>/cmsSolution/class/delete.action*</pattern>
+	    <pattern>/cmsSolution/class/update.action*</pattern>
+	    
+	    <pattern>/cmsSolution/sub/delete.action*</pattern>
+	    <pattern>/cmsSolution/sub/modifyPublishType	.action*</pattern>
+	    <pattern>/cmsSolution/sub/add.action*</pattern>
+	    <pattern>/cmsSolution/sub/edit.action*</pattern>
+	    
+	    
+	    <pattern>/app/checkSmallImage.action*</pattern>
+		<pattern>/app/checkBigImage.action*</pattern>
+		<pattern>/product/management/checkImage.action*</pattern>
+		<pattern>/product/management/toUpdateNKeyPro.action*actionType=2</pattern>
+		<pattern>/product/management/toUpdateAttribute.action*actionType=2</pattern>
+		<pattern>/product/management/toAddtCommand.action*actionType=2*</pattern>
+		<pattern>/product/management/warn.action*actionType=2</pattern>
+		<pattern>/product/management/toProductInfo.action*</pattern>
+		<pattern>/product/management/toAttributeInfo.action*</pattern>
+		<pattern>/product/management/toCommandInfo.action*</pattern>
+		<pattern>/product/management/toWarn.action*</pattern>
+		<pattern>/upload.action*</pattern>
+		<pattern>/project/getProjectRole.action*</pattern>
+
+		 <pattern>/zpJlInfo/paseWord.action*</pattern> 
+		 <pattern>/zpJlInfo/paseWord.action*</pattern> 
+	</excludes>
+
+	<decorator name="main" page="newMain.ftl">
+		<pattern>/**</pattern>
+	</decorator>
+
+</decorators>
