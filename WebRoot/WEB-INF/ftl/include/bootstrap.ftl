@@ -1,3 +1,4 @@
+<#setting number_format="#">
 <link href="/bootstrap/css/bootstrap_modal.css" rel="stylesheet" type="text/css" />
 <script src="/bootstrap/js/bootstrap-transition.js"></script>
 <script src="/bootstrap/js/bootstrap-alert.js"></script>

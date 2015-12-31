@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TgSuggestBugInfo">
+
+	<resultMap type="TgSuggestBugInfo" id="tgSuggestBugInfoMap">
+	        	<id  column="suggest_id" property="suggestId"></id>
+	        	<result  column="account_type" property="accountType" />
+	        	<result  column="project_type" property="projectType" />
+	        	<result  column="current_url" property="currentUrl" />
+	        	<result  column="title" property="title" />
+	        	<result  column="content" property="content" />
+	        	<result  column="address" property="address" />
+	        	<result  column="agent" property="agent" />
+	        	<result  column="user_os" property="userOs" />
+	        	<result  column="operation_type" property="operationType" />
+	        	<result  column="in_person" property="inPerson" />
+	        	<result  column="in_time" property="inTime" />
+	        	<result  column="sug_type" property="sugType" />
+	        	<result  column="update_time" property="updateTime" />
+	        	<result  column="update_person" property="updatePerson" />
+			<result  column="inPersonName" property="inPersonName" />
+	</resultMap>
+	
+	<!-- 查询 建议列表 -->
+	<select id="queryTgSuggestBugInfoList" resultMap="tgSuggestBugInfoMap">
+		SELECT
+			<include refid="getParamSQL"></include>
+			<include refid="getListSQL"></include>
+		ORDER BY sbi.suggest_id desc 
+		<if test="skipResults!=null">
+				limit #{skipResults} ,#{maxResults}
+		</if>
+		
+	</select>
+	
+	<!-- 查询 建议列表条数 -->
+	<select id="getTgSuggestBugInfoListCount" resultType="int">
+		SELECT
+			count(1)
+			<include refid="getListSQL"></include>
+	</select>
+	
+	
+	<!-- 添加 建议 -->
+	<insert id="addTgSuggestBugInfo" flushCache="true" useGeneratedKeys="true" keyProperty="suggestId">
+		INSERT INTO tg_suggest_bug_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		        	<if test="accountType != null">
+		        		account_type,
+		        	</if>
+		        	<if test="projectType != null">
+		        		project_type,
+		        	</if>
+		        	<if test="currentUrl != null">
+		        		current_url,
+		        	</if>
+		        	<if test="title != null">
+		        		title,
+		        	</if>
+		        	<if test="content != null">
+		        		content,
+		        	</if>
+		        	<if test="address != null">
+		        		address,
+		        	</if>
+		        	<if test="agent != null">
+		        		agent,
+		        	</if>
+		        	<if test="userOs != null">
+		        		user_os,
+		        	</if>
+		        	<if test="operationType != null">
+		        		operation_type,
+		        	</if>
+		        	<if test="inPerson != null">
+		        		in_person,
+		        	</if>
+		        	<if test="inTime != null">
+		        		in_time,
+		        	</if>
+		        	<if test="sugType != null">
+		        		sug_type,
+		        	</if>
+		        	<if test="updateTime != null">
+		        		update_time,
+		        	</if>
+		        	<if test="updatePerson != null">
+		        		update_person,
+		        	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			        	<if test="accountType != null">
+			        		#{accountType},
+			        	</if>
+			        	<if test="projectType != null">
+			        		#{projectType},
+			        	</if>
+			        	<if test="currentUrl != null">
+			        		#{currentUrl},
+			        	</if>
+			        	<if test="title != null">
+			        		#{title},
+			        	</if>
+			        	<if test="content != null">
+			        		#{content},
+			        	</if>
+			        	<if test="address != null">
+			        		#{address},
+			        	</if>
+			        	<if test="agent != null">
+			        		#{agent},
+			        	</if>
+			        	<if test="userOs != null">
+			        		#{userOs},
+			        	</if>
+			        	<if test="operationType != null">
+			        		#{operationType},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		#{inPerson},
+			        	</if>
+			        	<if test="inTime != null">
+			        		#{inTime},
+			        	</if>
+			        	<if test="sugType != null">
+			        		#{sugType},
+			        	</if>
+			        	<if test="updateTime != null">
+			        		#{updateTime},
+			        	</if>
+			        	<if test="updatePerson != null">
+			        		#{updatePerson},
+			        	</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改 建议 -->
+	<update id="updateTgSuggestBugInfo" >
+		UPDATE  tg_suggest_bug_info
+		<trim prefix="set" suffixOverrides=",">
+			        	<if test="accountType != null">
+			        		account_type=#{accountType},
+			        	</if>
+			        	<if test="projectType != null">
+			        		project_type=#{projectType},
+			        	</if>
+			        	<if test="currentUrl != null">
+			        		current_url=#{currentUrl},
+			        	</if>
+			        	<if test="title != null">
+			        		title=#{title},
+			        	</if>
+			        	<if test="content != null">
+			        		content=#{content},
+			        	</if>
+			        	<if test="address != null">
+			        		address=#{address},
+			        	</if>
+			        	<if test="agent != null">
+			        		agent=#{agent},
+			        	</if>
+			        	<if test="userOs != null">
+			        		user_os=#{userOs},
+			        	</if>
+			        	<if test="operationType != null">
+			        		operation_type=#{operationType},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		in_person=#{inPerson},
+			        	</if>
+			        	<if test="inTime != null">
+			        		in_time=#{inTime},
+			        	</if>
+			        	<if test="sugType != null">
+			        		sug_type=#{sugType},
+			        	</if>
+			        	<if test="updateTime != null">
+			        		update_time=#{updateTime},
+			        	</if>
+			        	<if test="updatePerson != null">
+			        		update_person=#{updatePerson},
+			        	</if>
+		</trim>
+		WHERE suggest_id=#{suggestId}
+	</update>
+	
+	
+	<!-- 修改 建议byMAP -->
+	<update id="updateTgSuggestBugInfobyMAP" >
+		UPDATE  tg_suggest_bug_info
+		<trim prefix="set" suffixOverrides=",">
+			        	<if test="accountType != null">
+			        		account_type=#{accountType},
+			        	</if>
+			        	<if test="projectType != null">
+			        		project_type=#{projectType},
+			        	</if>
+			        	<if test="currentUrl != null">
+			        		current_url=#{currentUrl},
+			        	</if>
+			        	<if test="title != null">
+			        		title=#{title},
+			        	</if>
+			        	<if test="content != null">
+			        		content=#{content},
+			        	</if>
+			        	<if test="address != null">
+			        		address=#{address},
+			        	</if>
+			        	<if test="agent != null">
+			        		agent=#{agent},
+			        	</if>
+			        	<if test="userOs != null">
+			        		user_os=#{userOs},
+			        	</if>
+			        	<if test="operationType != null">
+			        		operation_type=#{operationType},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		in_person=#{inPerson},
+			        	</if>
+			        	<if test="inTime != null">
+			        		in_time=#{inTime},
+			        	</if>
+			        	<if test="sugType != null">
+			        		sug_type=#{sugType},
+			        	</if>
+			        	<if test="updateTime != null">
+			        		update_time=#{updateTime},
+			        	</if>
+			        	<if test="updatePerson != null">
+			        		update_person=#{updatePerson},
+			        	</if>
+		</trim>
+		WHERE 1=1
+		<if test="qtype != null and qtype=='one'">
+		</if>
+	</update>
+
+	<!-- 删除  建议 -->
+	<delete id="deleteTgSuggestBugInfo">
+		DELETE FROM tg_suggest_bug_info 
+		<where>
+				        	<if test="suggestId != null">
+				        		AND suggest_id=#{suggestId} 
+				        	</if>
+				        	<if test="accountType != null">
+				        		AND account_type=#{accountType} 
+				        	</if>
+				        	<if test="projectType != null">
+				        		AND project_type=#{projectType} 
+				        	</if>
+				        	<if test="currentUrl != null">
+				        		AND current_url=#{currentUrl} 
+				        	</if>
+				        	<if test="title != null">
+				        		AND title=#{title} 
+				        	</if>
+				        	<if test="content != null">
+				        		AND content=#{content} 
+				        	</if>
+				        	<if test="address != null">
+				        		AND address=#{address} 
+				        	</if>
+				        	<if test="agent != null">
+				        		AND agent=#{agent} 
+				        	</if>
+				        	<if test="userOs != null">
+				        		AND user_os=#{userOs} 
+				        	</if>
+				        	<if test="operationType != null">
+				        		AND operation_type=#{operationType} 
+				        	</if>
+				        	<if test="inPerson != null">
+				        		AND in_person=#{inPerson} 
+				        	</if>
+				        	<if test="inTime != null">
+				        		AND in_time=#{inTime} 
+				        	</if>
+				        	<if test="sugType != null">
+				        		AND sug_type=#{sugType} 
+				        	</if>
+				        	<if test="updateTime != null">
+				        		AND update_time=#{updateTime} 
+				        	</if>
+				        	<if test="updatePerson != null">
+				        		AND update_person=#{updatePerson} 
+				        	</if>
+		</where>
+	</delete>
+	
+	<!-- 获得  建议 -->
+	<select id="getTgSuggestBugInfoById" resultMap="tgSuggestBugInfoMap">
+		SELECT
+			<include refid="getParamSQL"></include>
+			<include refid="getListSQL"></include>
+		
+	</select>
+	
+	<!-- getListSQL -->
+	<sql id="getListSQL">
+			FROM
+			tg_suggest_bug_info  sbi
+			LEFT JOIN account a ON a.account_id =sbi.in_person
+		<where>
+					<if test="qtype != null and qtype=='like'">
+						<if test="nameT != null and nameT !='' ">
+				        		AND sbi.name like '%${nameT}%' 
+			        	</if>
+					</if>
+					  <if test="startTimeT != null and startTimeT !='' ">
+				      	<![CDATA[ AND (ji.in_time>#{startTimeT} AND ji.in_time<#{endTimeT}  ) ]]>	
+				 	 </if>
+				        	<if test="suggestId != null and suggestId !='' ">
+				        		AND sbi.suggest_id=#{suggestId} 
+				        	</if>
+				        	<if test="accountType != null and accountType !='' ">
+				        		AND sbi.account_type=#{accountType} 
+				        	</if>
+				        	<if test="projectType != null and projectType !='' ">
+				        		AND sbi.project_type=#{projectType} 
+				        	</if>
+				        	<if test="currentUrl != null and currentUrl !='' ">
+				        		AND sbi.current_url=#{currentUrl} 
+				        	</if>
+				        	<if test="title != null and title !='' ">
+				        		AND sbi.title=#{title} 
+				        	</if>
+				        	<if test="content != null and content !='' ">
+				        		AND sbi.content=#{content} 
+				        	</if>
+				        	<if test="address != null and address !='' ">
+				        		AND sbi.address=#{address} 
+				        	</if>
+				        	<if test="agent != null and agent !='' ">
+				        		AND sbi.agent=#{agent} 
+				        	</if>
+				        	<if test="userOs != null and userOs !='' ">
+				        		AND sbi.user_os=#{userOs} 
+				        	</if>
+				        	<if test="operationType != null and operationType !='' ">
+				        		AND sbi.operation_type=#{operationType} 
+				        	</if>
+				        	<if test="inPerson != null and inPerson !='' ">
+				        		AND sbi.in_person=#{inPerson} 
+				        	</if>
+				        	<if test="inTime != null and inTime !='' ">
+				        		AND sbi.in_time=#{inTime} 
+				        	</if>
+				        	<if test="sugType != null and sugType !='' ">
+				        		AND sbi.sug_type=#{sugType} 
+				        	</if>
+				        	<if test="updateTime != null and updateTime !='' ">
+				        		AND sbi.update_time=#{updateTime} 
+				        	</if>
+				        	<if test="updatePerson != null and updatePerson !='' ">
+				        		AND sbi.update_person=#{updatePerson} 
+				        	</if>
+					
+					<if test="ids !=null">
+				         AND sbi.suggest_id IN
+						    <foreach  item="item" collection="ids"  index="index" open="(" separator="," close=")"> 
+									 ${item} 
+							</foreach>
+			        </if>
+		</where>
+	</sql>
+	
+	<!-- sql 参数 -->
+	<sql id="getParamSQL">
+						 		sbi.suggest_id,
+						 		sbi.account_type,
+						 		sbi.project_type,
+						 		sbi.current_url,
+						 		sbi.title,
+						 		sbi.content,
+						 		sbi.address,
+						 		sbi.agent,
+						 		sbi.user_os,
+						 		sbi.operation_type,
+						 		sbi.in_person,
+						 		sbi.in_time,
+						 		sbi.sug_type,
+						 		sbi.update_time,
+						 		sbi.update_person
+								,a.username as inPersonName
+	</sql>
+	
+	<!-- 统计sql -->
+	<select id="statisticsTgSuggestBugInfoInfo" resultType="HashMap">
+		<if test="qtype != null and qtype=='one'">
+		</if>
+		<if test="qtype != null and qtype=='two'">
+		</if>
+	</select>
+
+</mapper>
+

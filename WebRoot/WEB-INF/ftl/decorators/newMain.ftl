@@ -1,3 +1,4 @@
+<#setting number_format="#">
 
 <#assign menuClass=menuClass!"editPassword">
 
@@ -52,6 +53,18 @@ function menuClick(){
      	</div>
      </#if>
      
+     
+     	 <!-- 用户建议管理 -->
+     	<div class="MenuLevel1"> 用户建议管理 <span><img src="/images/<#if d>2<#else>1</#if>.gif" border="0"/></span></div>
+     		<div class="<#if d>SubMenuLayerHidden</#if> SubMenu">
+      			<a class="MenuLevel4 editPassword" href="/tgSuggestBugInfo/suggestList.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgSuggestBugInfo_suggestList">用户建议管理</span></a>
+     	</div>
+     	
+     	 <!-- 用户bug管理 -->
+     	<div class="MenuLevel1"> 用户bug管理 <span><img src="/images/<#if d>2<#else>1</#if>.gif" border="0"/></span></div>
+     		<div class="<#if d>SubMenuLayerHidden</#if> SubMenu">
+      			<a class="MenuLevel4 editPassword" href="/tgSuggestBugInfo/bugList.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgSuggestBugInfo_bugList">用户bug管理</span></a>
+     	</div>
     
      
     </div>

@@ -58,7 +58,13 @@ public enum DictionaryType {
 	
 	ENTERPRISE_REPLY_STATUS(24, "企业反馈状态"),//向企业推荐时
 	
-	HEADHUNTER_REPLY_STATUS(25, "猎头反馈状态");//猎头反馈状态
+	HEADHUNTER_REPLY_STATUS(25, "猎头反馈状态"),//猎头反馈状态
+	
+	SUGGEST_OPERATOR_STATUS(26, "建议状态"),
+	
+	BUG_OPERATOR_STATUS(26, "bug状态");
+	
+
 
 	
 	

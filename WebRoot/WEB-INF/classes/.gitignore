@@ -1,0 +1,8 @@
+/com
+/conf
+/log4j.properties
+/mappers
+/mybatis-config.xml
+/spring
+/spring-mvc.xml
+/template

@@ -26,6 +26,8 @@
 		<typeAlias type="com.loiot.baqi.pojo.AccountExpandInfo" alias="AccountExpandInfo" />
 	    
 	    <typeAlias type="com.loiot.baqi.vo.JlAuditPersonList" alias="JlAuditPersonList" />
+	    <typeAlias type="com.loiot.baqi.pojo.TgSuggestBugInfo" alias="TgSuggestBugInfo" />
+	    
 		
 		
 		
