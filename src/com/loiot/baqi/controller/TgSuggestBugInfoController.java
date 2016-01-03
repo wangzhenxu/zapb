@@ -260,11 +260,11 @@ public class TgSuggestBugInfoController {
     public Object ajaxGetById(@RequestParam(value = "id", required = true) java.lang.Long id)throws Exception {
     	TgSuggestBugInfo p=null;
      	//用户数据过滤
-     	/*if(UserSessionUtils.getAccountType()==AccountType.HR.getCode() || UserSessionUtils.getAccountType()==AccountType.JOB_HUNTER.getCode() ){
+     	if(UserSessionUtils.getAccountType()==AccountType.HR.getCode() || UserSessionUtils.getAccountType()==AccountType.JOB_HUNTER.getCode() ){
      		  p = tgSuggestBugInfoService.getTgSuggestBugInfoById(id, UserSessionUtils.getAccount().getAccountId());
      	} else {
    		      p = tgSuggestBugInfoService.getTgSuggestBugInfoById(id);
-     	}*/
+     	}
      	if(p==null){
      		return AjaxResponse.NOEXITS;
      	}

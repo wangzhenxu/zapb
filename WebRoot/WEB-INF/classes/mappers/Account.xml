@@ -13,7 +13,6 @@
 		<result column="is_delete" property="isDelete" />
 		
 		<result  column="expand_id" property="expandId" />
-       	<result  column="audit_position_id" property="auditPositionId" />
        	<result  column="nick_name" property="nickName" />
        	<result  column="iphone" property="iphone" />
        	<result  column="email" property="email" />
@@ -24,6 +23,7 @@
        	<result  column="in_person" property="inPerson" />
      	<result  column="last_login_time" property="lastLoginTime" />
    		<result  column="is_accept_audit" property="isAcceptAudit" />
+     	<result  column="account_level" property="accountLevel" />
      	
        	
 	</resultMap>
@@ -36,7 +36,6 @@
 		<result column="is_delete" property="isDelete" />
 		
 		<result  column="expand_id" property="expandId" />
-       	<result  column="audit_position_id" property="auditPositionId" />
        	<result  column="nick_name" property="nickName" />
        	<result  column="iphone" property="iphone" />
        	<result  column="email" property="email" />
@@ -47,6 +46,7 @@
        	<result  column="in_person" property="inPerson" />
      	<result  column="last_login_time" property="lastLoginTime" />
    		<result  column="is_accept_audit" property="isAcceptAudit" />
+		 <result  column="account_level" property="accountLevel" />
 		
 		<association property="role" javaType="Role">
 			<id column="role_id" property="roleId" />
@@ -63,7 +63,6 @@
 		<result column="is_delete" property="isDelete" />
 		
 		<result  column="expand_id" property="expandId" />
-       	<result  column="audit_position_id" property="auditPositionId" />
        	<result  column="nick_name" property="nickName" />
        	<result  column="iphone" property="iphone" />
        	<result  column="email" property="email" />
@@ -74,6 +73,7 @@
        	<result  column="in_person" property="inPerson" />
      	<result  column="last_login_time" property="lastLoginTime" />
       	<result  column="is_accept_audit" property="isAcceptAudit" />
+       	<result  column="account_level" property="accountLevel" />
        	
 		<association property="role" javaType="Role">
 			<id column="role_id" property="roleId" />
@@ -93,7 +93,6 @@
 		a.account_id,a.username,a.password,a.type,r.role_id,r.role_name,r.role_str,p.permission_id,p.permission_name,p.permission_str
 		,a.is_delete,
 		ei.expand_id,
- 		ei.audit_position_id,
  		ei.nick_name,
  		ei.iphone,
  		ei.email,
@@ -103,16 +102,17 @@
  		ei.in_time,
  		ei.in_person,
  		ei.last_login_time,
- 		ei.is_accept_audit
+ 		ei.is_accept_audit,
+ 		ei.account_level
 		from
-		account a
-		left join account_role ar on a.account_id=ar.account_id
-		left join role r on ar.role_id=r.role_id
-		left join role_permission rp
+		tg_account a
+		left join tg_account_role ar on a.account_id=ar.account_id
+		left join tg_role r on ar.role_id=r.role_id
+		left join tg_role_permission rp
 		on r.role_id=rp.role_id
-		left join permission p on
+		left join tg_permission p on
 		p.permission_id=rp.permission_id
-		left join account_expand_info  ei on a.account_id=ei.account_id
+		left join tg_account_expand_info  ei on a.account_id=ei.account_id
 		where a.username=#{username}
 	</select>
 
@@ -121,38 +121,38 @@
 	<select id="getPasswordByUsername" resultType="string">
 		select password
 		from
-		account
+		tg_account
 		where
 		username=#{username}
 	</select>
 
 	<select id="isExistUsername" resultType="long">
 		select account_id from
-		account where username=#{username}
+		tg_account where username=#{username}
 	</select>
 
 	<!-- 更新密码 -->
 	<update id="updatePassword" parameterType="map">
-		update account set
+		update tg_account set
 		password=#{password} where username=#{username} 
 	</update>
 	
 	<!-- 更新type -->
 	<update id="updateType">
-		update account set
+		update tg_account set
 		type=#{type} where account_id=#{accountId} 
 	</update>
 	
 		<!-- 更新删除状态 -->
 	<update id="updateDeleteStatus" parameterType="map">
-		update account set
+		update tg_account set
 		is_delete=#{isDelete} where account_id=#{accountId} 
 	</update>
 
 	<!-- 新增后台账号 -->
 	<insert id="addAccount" parameterType="Account">
 		insert into
-		account(username,password,type,is_delete)
+		tg_account(username,password,type,is_delete)
 		values(#{username},#{password},#{type},#{isDelete})
 		<selectKey resultType="long" keyProperty="accountId" order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -161,20 +161,20 @@
 
 	<!-- 为用户添加一个角色 -->
 	<insert id="addAccountRole">
-		insert into account_role(account_id,role_id)
+		insert into tg_account_role(account_id,role_id)
 		values(#{accountId},#{roleId})
 	</insert>
 
 	<!-- 删除后台账号 -->
 	<delete id="deleteAccountRole">
-		delete from account_role where
+		delete from tg_account_role where
 		account_id=#{accountId}
 	</delete>
 
 
 	<!-- 删除后台账号 -->
 	<delete id="deleteAccount">
-		delete from account where account_id=#{accountId}
+		delete from tg_account where account_id=#{accountId}
 	</delete>
 
 	<!-- 根据ID查询后台账号 -->
@@ -183,7 +183,6 @@
 		a.account_id,a.username,a.password,a.type,r.role_id,r.role_name,r.role_str,
 		a.is_delete,
 		ei.expand_id,
- 		ei.audit_position_id,
  		ei.nick_name,
  		ei.iphone,
  		ei.email,
@@ -193,13 +192,15 @@
  		ei.in_time,
  		ei.in_person,
  		ei.last_login_time,
- 		ei.is_accept_audit
+ 		ei.is_accept_audit,
+ 		ei.account_level
+ 		
  		
 		from
-		account a
-		left join account_role ar on a.account_id=ar.account_id
-		left join role r on ar.role_id=r.role_id
-		left join account_expand_info  ei on a.account_id=ei.account_id
+		tg_account a
+		left join tg_account_role ar on a.account_id=ar.account_id
+		left join tg_role r on ar.role_id=r.role_id
+		left join tg_account_expand_info  ei on a.account_id=ei.account_id
 		where
 		a.account_id=#{accountId}
 	</select>
@@ -210,7 +211,6 @@
 		a.account_id,a.username,a.password,a.type,r.role_id,r.role_name,r.role_str,
 		a.is_delete,
 		ei.expand_id,
- 		ei.audit_position_id,
  		ei.nick_name,
  		ei.iphone,
  		ei.email,
@@ -220,7 +220,9 @@
  		ei.in_time,
  		ei.in_person,
  		ei.last_login_time,
- 		ei.is_accept_audit
+ 		ei.is_accept_audit,
+ 		ei.account_level
+ 		
  		
 		<include refid="getAccountListSQL" />
 		
@@ -249,17 +251,14 @@
 	<!-- getAccountListSQL -->
 	<sql id="getAccountListSQL">
 		from
-		account a
-		left join account_role ar on a.account_id=ar.account_id
-		left join role r on ar.role_id=r.role_id
-		left join account_expand_info  ei on a.account_id=ei.account_id
+		tg_account a
+		left join tg_account_role ar on a.account_id=ar.account_id
+		left join tg_role r on ar.role_id=r.role_id
+		left join tg_account_expand_info  ei on a.account_id=ei.account_id
 		
 		<where>
 			<if test="username != null and username !=''">
 				AND a.username like '%${username}%'
-			</if>
-			<if test="auditPositionId != null and auditPositionId !=''">
-				AND ei.audit_position_id=#{auditPositionId}
 			</if>
 			<if test="type != null and type !='' ">
 				AND a.type=#{type}
@@ -269,6 +268,9 @@
 			</if>
 			<if test="isAcceptAudit != null and isAcceptAudit !='' ">
 				AND ei.is_accept_audit=#{isAcceptAudit}
+			</if>
+			<if test="accountLevel != null and accountLevel !='' ">
+				AND ei.account_level=#{accountLevel}
 			</if>
 			
 			

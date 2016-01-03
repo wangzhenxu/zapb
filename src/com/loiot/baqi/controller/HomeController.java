@@ -30,9 +30,17 @@ public class HomeController {
 	@RequestMapping(value = "/welcome")
 	public String welcome() {
 		Subject subject = SecurityUtils.getSubject();
-		
-		//客户管理
-		return "redirect:/zpCompanyInfo/list.action";
-		
+		//没有补充个人信息
+		if(StringUtils.isBlank(UserSessionUtils.getAccount().getIphone())){
+			return "redirect:/accountExpandInfo/toEdit.action?id="+UserSessionUtils.getAccount().getExpandId();
+		} else 
+		if (subject.isPermitted("zpCompanyInfo:list")) {
+			//客户管理
+			return "redirect:/zpCompanyInfo/list.action";
+		}
+		else {
+			// 什么角色都没有就到密码修改，一般没有这个情况
+			return "redirect:/password.action";
+		}
 	}
 }

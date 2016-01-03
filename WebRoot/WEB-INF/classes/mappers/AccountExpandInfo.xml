@@ -7,7 +7,6 @@
 	<resultMap type="AccountExpandInfo" id="accountExpandInfoMap">
 	        	<id  column="expand_id" property="expandId"></id>
 	        	<result  column="account_id" property="accountId" />
-	        	<result  column="audit_position_id" property="auditPositionId" />
 	        	<result  column="real_name" property="realName" />
 	        	<result  column="nick_name" property="nickName" />
 	        	<result  column="iphone" property="iphone" />
@@ -21,7 +20,11 @@
 	        	<result  column="idcard" property="idcard" />
 	        	<result  column="is_accept_audit" property="isAcceptAudit" />
 	        	<result  column="curr_money" property="currMoney" />
-			<result  column="inPersonName" property="inPersonName" />
+				<result  column="inPersonName" property="inPersonName" />
+				<result  column="qq" property="qq" />
+				<result  column="account_level" property="accountLevel" />
+				
+			
 	</resultMap>
 	
 	<!-- 查询 个人信息列表 -->
@@ -46,13 +49,10 @@
 	
 	<!-- 添加 个人信息 -->
 	<insert id="addAccountExpandInfo" flushCache="true" useGeneratedKeys="true" keyProperty="expandId">
-		INSERT INTO account_expand_info
+		INSERT INTO tg_account_expand_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		        	<if test="accountId != null">
 		        		account_id,
-		        	</if>
-		        	<if test="auditPositionId != null">
-		        		audit_position_id,
 		        	</if>
 		        	<if test="realName != null">
 		        		real_name,
@@ -92,6 +92,12 @@
 		        	</if>
 		        	<if test="currMoney != null">
 		        		curr_money,
+		        	</if>
+		        	<if test="qq != null">
+		        		qq,
+		        	</if>
+		        	<if test="accountLevel != null">
+		        		account_level,
 		        	</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -140,25 +146,28 @@
 			        	<if test="currMoney != null">
 			        		#{currMoney},
 			        	</if>
+			        	<if test="qq != null">
+			        		#{qq},
+			        	</if>
+			        	<if test="accountLevel != null">
+			        		#{accountLevel},
+			        	</if>
 		</trim>
 	</insert>
 	
 	<!-- 修改 职位扩展信息 -->
 	<update id="updatePostionInfo" >
-		UPDATE  account_expand_info SET
-		audit_position_id=#{auditPositionId}
+		UPDATE  tg_account_expand_info SET
+		account_level=#{accountLevel}
 		WHERE account_id=#{accountId}
 	</update>
 	
 	<!-- 修改 个人信息 -->
 	<update id="updateAccountExpandInfo" >
-		UPDATE  account_expand_info
+		UPDATE  tg_account_expand_info
 		<trim prefix="set" suffixOverrides=",">
 			        	<if test="accountId != null">
 			        		account_id=#{accountId},
-			        	</if>
-			        	<if test="auditPositionId != null">
-			        		audit_position_id=#{auditPositionId},
 			        	</if>
 			        	<if test="realName != null">
 			        		real_name=#{realName},
@@ -199,22 +208,25 @@
 			        	<if test="currMoney != null">
 			        		curr_money=#{currMoney},
 			        	</if>
+			        	<if test="qq != null">
+			        		qq=#{qq},
+			        	</if>
+			        	<if test="accountLevel != null">
+			        		account_level=#{accountLevel},
+			        	</if>
 		</trim>
 		WHERE expand_id=#{expandId}
 	</update>
 
 	<!-- 删除  个人信息 -->
 	<delete id="deleteAccountExpandInfo">
-		DELETE FROM account_expand_info 
+		DELETE FROM tg_account_expand_info 
 		<where>
 				        	<if test="expandId != null">
 				        		AND expand_id=#{expandId} 
 				        	</if>
 				        	<if test="accountId != null">
 				        		AND account_id=#{accountId} 
-				        	</if>
-				        	<if test="auditPositionId != null">
-				        		AND audit_position_id=#{auditPositionId} 
 				        	</if>
 				        	<if test="realName != null">
 				        		AND real_name=#{realName} 
@@ -255,6 +267,9 @@
 				        	<if test="currMoney != null">
 				        		AND curr_money=#{currMoney} 
 				        	</if>
+				        	<if test="accountLevel != null">
+				        		AND account_level=#{accountLevel} 
+				        	</if>
 		</where>
 	</delete>
 	
@@ -269,8 +284,8 @@
 	<!-- getListSQL -->
 	<sql id="getListSQL">
 			FROM
-			account_expand_info  ei
-			LEFT JOIN account a ON a.account_id =ei.in_person
+			tg_account_expand_info  ei
+			LEFT JOIN tg_account a ON a.account_id =ei.in_person
 		<where>
 					<if test="qtype != null and qtype=='like'">
 						<if test="nameT != null and nameT !='' ">
@@ -282,9 +297,6 @@
 				        	</if>
 				        	<if test="accountId != null and accountId !='' ">
 				        		AND ei.account_id=#{accountId} 
-				        	</if>
-				        	<if test="auditPositionId != null and auditPositionId !='' ">
-				        		AND ei.audit_position_id=#{auditPositionId} 
 				        	</if>
 				        	<if test="realName != null and realName !='' ">
 				        		AND ei.real_name=#{realName} 
@@ -325,6 +337,12 @@
 				        	<if test="currMoney != null and currMoney !='' ">
 				        		AND ei.curr_money=#{currMoney} 
 				        	</if>
+				        	<if test="qq != null and qq !='' ">
+				        		AND ei.qq=#{qq} 
+				        	</if>
+				        	<if test="accountLevel != null and accountLevel !='' ">
+				        		AND ei.account_level=#{accountLevel} 
+				        	</if>
 					
 					<if test="ids !=null">
 				         AND ei.expand_id IN
@@ -339,7 +357,6 @@
 	<sql id="getParamSQL">
 						 		ei.expand_id,
 						 		ei.account_id,
-						 		ei.audit_position_id,
 						 		ei.real_name,
 						 		ei.nick_name,
 						 		ei.iphone,
@@ -353,7 +370,9 @@
 						 		ei.idcard,
 						 		ei.is_accept_audit,
 						 		ei.curr_money
-								,a.username as inPersonName
+								,a.username as inPersonName,
+								ei.qq,
+								ei.account_level
 	</sql>
 
 </mapper>

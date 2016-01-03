@@ -32,8 +32,10 @@ public class AccountExpandInfo  implements java.io.Serializable{
 	    private java.lang.String idcard;  //身份证 db_column: idcard 
 	    private java.lang.Long isAcceptAudit;  //是否接受评审 db_column: is_accept_audit 
 	    private java.lang.Double currMoney;  //当前余额 db_column: curr_money 
+	    private java.lang.Long accountLevel;  //账号级别
 
 	  private java.lang.String inPersonName;
+	   private String qq;
 
 	public AccountExpandInfo(){
 	}

@@ -1,7 +1,7 @@
 //建议
 var suggestInfo = {
 	//请求url
-	listUrl:"/tgSuggestBugInfo/suggestList.action", //列表地址
+	listUrl:"/tgSuggestBugInfo/list.action", //列表地址
 	toAddUrl:"/tgSuggestBugInfo/toAdd.action", //去添加页面地址
 	addUrl:"/tgSuggestBugInfo/add.action", //添加地址
 	toEditUrl:"/tgSuggestBugInfo/toEdit.action?id=", //去修改页面地址
@@ -50,7 +50,7 @@ var suggestInfo = {
 		//列表页面
 		if(self.currPage!="list"){
 			self.addform.validationEngine({scroll:false});
-			self.addBtn.unbind("click").unbind("click").click(function(){
+			self.addBtn.unbind("click").click(function(){
 				self.add();
 			});
 		}
@@ -94,8 +94,8 @@ var suggestInfo = {
 		location.href=this.toAddUrl;
 	},
 	 //跳转修改页面
-	toEdit : function (id,type){
-		location.href=this.toEditUrl +id+"&type="+type;
+	toEdit : function (id){
+		location.href=this.toEditUrl +id;
    },
    //跳转详情页面
    toDetail : function (id){

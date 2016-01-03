@@ -24,13 +24,13 @@
 
 	<!-- 删除权限 -->
 	<delete id="deletePermission">
-		delete from role_permission where role_id=#{roleId}
+		delete from tg_role_permission where role_id=#{roleId}
 	</delete>
 
 	<!-- 新增角色 -->
 	<insert id="addPermission">
 		insert into
-		role_permission(role_id,permission_id)
+		tg_role_permission(role_id,permission_id)
 		values(#{roleId},#{permissionId})
 	</insert>
 
@@ -38,7 +38,7 @@
 	<!-- 新增角色 -->
 	<insert id="addRole" parameterType="Role">
 		insert into
-		role(role_name,role_str)
+		tg_role(role_name,role_str)
 		values(#{roleName},#{roleStr})
 		<selectKey resultType="long" keyProperty="roleId" order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -47,7 +47,7 @@
 
 	<!-- 删除角色 -->
 	<delete id="deleteRole">
-		delete from role where role_id=#{roleId}
+		delete from tg_role where role_id=#{roleId}
 	</delete>
 
 
@@ -55,10 +55,10 @@
 	<select id="getRoleById" resultMap="rolePermission">
 		select
 		r.role_id,r.role_name,r.role_str,p.permission_id,p.permission_name,p.permission_str
-		from role r left join
-		role_permission rp on r.role_id=rp.role_id
+		from tg_role r left join
+		tg_role_permission rp on r.role_id=rp.role_id
 		left
-		join permission p on
+		join tg_permission p on
 		rp.permission_id=p.permission_id
 		where
 		r.role_id=#{roleId}
@@ -79,7 +79,7 @@
 
 	<!-- getRoleListSQL -->
 	<sql id="getRoleListSQL">
-		from role
+		from tg_role
 		<where>
 			<if test="roleName != null">
 				role_name like '%${roleName}%'

@@ -62,6 +62,8 @@ public class Account implements java.io.Serializable, BaseLoiotPojo {
     private java.lang.Long inPerson;  //录入人 db_column: in_person 
     private Date lastLoginTime; //最后登陆时间
     private Long isAcceptAudit; //是否接受评审
+    private String qq;
+    private java.lang.Long accountLevel;  //账号级别
 
     /**
      * 账号角色
