@@ -3,7 +3,6 @@ package com.loiot.baqi.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,22 +13,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.loiot.baqi.constant.ApplicationConst;
 import com.loiot.baqi.controller.response.AjaxResponse;
 import com.loiot.baqi.vo.FileUploadBean;
-import com.loiot.commons.utils.FileUtil;
 
 @Controller
 // 声明该类为控制器类
 @RequestMapping("/file")
 public class FileUploadController {
     protected Logger logger = Logger.getLogger(FileUploadController.class);
+    
+    private static final String UPLOAD_FILE_FOLDER = "E:/file/"; //这个路径后期可以通过系统配置的方式进行注入
 
     // 将文件上传请求映射到该方法
     @RequestMapping("/upload"   )  
@@ -59,9 +57,11 @@ public class FileUploadController {
           return null;
     }
     
-    @RequestMapping(value="/upload2")
-    public Object upload2(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {  
+    @RequestMapping(value="/upload2", method = RequestMethod.POST)
+    public Object upload2(HttpServletRequest request,HttpServletResponse response) throws IllegalStateException, IOException {
+        logger.debug("Visit file/upload2");
     	FileUploadBean  returnBean = new FileUploadBean();
+    	String fileName = null;
     	//创建一个通用的多部分解析器  
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());  
         //判断 request 是否有文件上传,即多部分请求  
@@ -82,10 +82,11 @@ public class FileUploadController {
                     if(myFileName.trim() !=""){  
                         System.out.println(myFileName);  
                         //重命名上传后的文件名  
-                        String fileName = "demoUpload" + file.getOriginalFilename();  
-                        //定义上传路径  
-                        String path = "D:/" + fileName;  
-                        File localFile = new File(path);  
+                        fileName = "demoUpload" + file.getOriginalFilename();
+                        //定义上传路径 
+                        String path = UPLOAD_FILE_FOLDER + fileName;
+                        File localFile = createIfNotExists(path, true);
+                        
                         file.transferTo(localFile);  
                     }  
                 }  
@@ -96,9 +97,9 @@ public class FileUploadController {
               
         }  
         returnBean.setFilenames("sfsdfd");
-        this.printScript(response, "{\"a\":1}");
+        this.printScript(response, "{\"fileName\":\""+ fileName + "\"}");
        return null;
-        // return AjaxResponse.OK(returnBean);
+//         return AjaxResponse.OK(returnBean);
     }  
     
     /**
@@ -122,7 +123,24 @@ public class FileUploadController {
         }
     }
 
-
-   
+    @RequestMapping("/test")
+    public String test(){
+        logger.debug("Visit file/test");
+        
+        return "test";
+    }
+    
+    public File createIfNotExists(String path,boolean dir) throws IOException{
+        File file = new File(path);
+        if(!file.exists()){
+            if(dir){
+                file.mkdirs();
+            }else{
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            }
+        }
+        return file;
+    }
 
 }

@@ -125,6 +125,7 @@ public class TgSuggestBugInfoController {
     			newParamMap.put("nameT", val);
     		}else
     		if(String.valueOf(val).length()>0){
+    			newParamMap.put(String.valueOf(key), val);
         		model.put(String.valueOf(key), val);
     		}
 		}
@@ -181,25 +182,16 @@ public class TgSuggestBugInfoController {
     @RequestMapping(value = "/edit")
     @ResponseBody
     public Object editTgSuggestBugInfo(TgSuggestBugInfo p,HttpSession session,HttpServletRequest request) {
-    	/*try {
-        // 获得账号
-        //Account account = (Account) session.getAttribute(Const.SESSION_USER_KEY);
-    		//如果前端，没有改变编号，就不用验证
-        	String onlyName=request.getParameter("onlyName");
-        	//if(!StringUtils.isBlank(onlyName) &&  !p.getName().equals(onlyName)){
-	    	//验证唯一性
-        	pmap.clear();
-        	//pmap.put("name", p.getName());
-	    	int result=tgSuggestBugInfoService.getTgSuggestBugInfoListCount(pmap);
-	    	if(result>0){
-		        return NAME_EXIST;
-			}
-    	}
-        tgSuggestBugInfoService.updateTgSuggestBugInfo(p);
+    	try {
+           p.setUpdatePerson(UserSessionUtils.getAccount().getAccountId());
+           p.setUpdateTime(new Date());
+           tgSuggestBugInfoService.updateTgSuggestBugInfo(p);
     	} catch (Exception e) {
 			  e.printStackTrace();
 			  return AjaxResponse.FAILED;
-		}*/
+		}
+       
+
         return AjaxResponse.OK;
     }
 
@@ -209,13 +201,25 @@ public class TgSuggestBugInfoController {
      * @return
      */
     @RequestMapping(value = "/toView")
-    public String toViewTgSuggestBugInfo(@RequestParam(value = "id", required = true) java.lang.Long id, ModelMap model)throws Exception {
+    public String toViewTgSuggestBugInfo(@RequestParam(value = "id", required = true) java.lang.Long id, 
+    		@RequestParam(value = "type", required = true) int type,
+    		ModelMap model)throws Exception {
     	if(id==null){
     		return URLConst.ERROR_URL;
     	}
     	//model.put("p", tgSuggestBugInfoService.getTgSuggestBugInfoById(id));
     	 model.put("pid",  id);
-    	return "/suggestInfo/suggestInfo_add";
+     	String resultType="";
+
+    	 if((int)SuggestType.SUGGEST.getCode()==type){
+     		resultType="/suggestInfo/suggestInfo_add";
+     	}else 
+ 		if((int)SuggestType.BUG.getCode()==type){
+     		resultType="/suggestInfo/bugInfo_add";
+     	}else {
+     		resultType=URLConst.ERROR_URL;
+     	}
+    	 return resultType;
     }
 
     /**

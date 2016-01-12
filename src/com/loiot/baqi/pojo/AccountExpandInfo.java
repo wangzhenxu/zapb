@@ -1,6 +1,8 @@
 
 package com.loiot.baqi.pojo;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

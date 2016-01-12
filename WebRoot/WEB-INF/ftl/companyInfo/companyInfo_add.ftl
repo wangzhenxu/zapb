@@ -1,6 +1,6 @@
 <#include "../include/comm_jlb_macro.ftl"/>
  <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>			
-
+<#include "../include/dropzone.ftl"/>
 <!-- 
 	列表地址：/zpCompanyInfo/list.action
 	去添加页面地址 ：/zpCompanyInfo/toAdd.action
@@ -144,6 +144,11 @@
          </table>
 
      </div>
+     <!-- 图片上传 -->
+     <div class="dropzone needsclick dz-clickable dz-started">
+		  
+		</div>
+     <!-- /图片上传 -->
     </div>
     <div class="anniu">
 	   	
@@ -161,8 +166,105 @@
 <!-- 右侧 结束 -->
 </form>
 <#include "../include/deleteConfirmModal.ftl">
+<div id="preview-template" style="display: none;">
+    
+    <div class="dz-preview dz-file-preview">
+      <div class="dz-image"><img data-dz-thumbnail=""></div>
+      <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress=""></span></div>
+    </div>
+  </div>
 <script src="/js/companyInfo.js"></script>
 
 <script>
 	companyInfo.initPage();
 </script>
+
+<!-- 图片上传 -->
+<style type="text/css">
+.dropzone { border: 2px dashed #0087F7; border-radius: 5px; background: white; }
+.dropzone .dz-message { font-weight: 400; }
+.dropzone .dz-message .note { font-size: 0.8em; font-weight: 200; display: block; margin-top: 1.4rem; }
+
+.dropzone {display: block; clear: both; height: 200px; width: 50%; margin-left: 30px;}
+
+.dropzone .dz-preview{float: left; margin-right: 10px;}
+</style>
+
+<script>
+	Dropzone.autoDiscover = false;
+	Dropzone.options.myAwesomeDropzone = false;
+	
+	var myDropzone = new Dropzone("div.dropzone", {
+		url: "/file/upload2.action",
+		previewTemplate: document.querySelector('#preview-template').innerHTML,
+    parallelUploads: 2,
+    thumbnailHeight: 120,
+    thumbnailWidth: 120,
+    maxFilesize: 10,
+    filesizeBase: 1000,
+    acceptedFiles:"image/*",
+    dictDefaultMessage: "点击或者拖动文件到此进行上传!",
+    dictRemoveFile: true,
+    thumbnail: function(file, dataUrl) {
+      if (file.previewElement) {
+        file.previewElement.classList.remove("dz-file-preview");
+        var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+        for (var i = 0; i < images.length; i++) {
+          var thumbnailElement = images[i];
+          thumbnailElement.alt = file.name;
+          thumbnailElement.src = dataUrl;
+        }
+        setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+      }
+    }
+  });
+	console.log(myDropzone);
+	
+	myDropzone.on("addedfile", function(file) {
+    console.log(myDropzone.getAcceptedFiles());
+  });
+  
+  myDropzone.on("maxfilesreached", function(file) {
+    alert("选择文件太大，不支持上传，换一个小点的文件试试!");
+    
+  });
+  
+  myDropzone.on("sending", function(file, xhr, formData) {
+	  // Will send the filesize along with the file as POST data.
+	  //formData.append("filesize", file.size);
+	});
+	
+	myDropzone.on("canceled", function(file, response) {
+    console.log("canceled");
+    
+    //取消上传
+	});
+	
+	myDropzone.on("error", function(file) {
+    myDropzone.removeFile(file);
+    
+    //上传失败，可以给用户提示上传失败请从试
+	});
+	
+	myDropzone.on("success", function(file, response) {
+    //上传成功，设置服务器返回的信息
+    file.serverName = response.fileName;
+    
+    console.log(getAllFiles());
+	});
+	
+	myDropzone.on("complete", function(file) {
+    console.log("complete");
+    //可以进行清理工作,比如隐藏等待框什么的。。
+	});
+	
+	//最后提交表单时，获取所有上传的图片列表
+	function getAllFiles(){
+		var files = myDropzone.getAcceptedFiles();
+		var fileNames = new Array();
+		for(var i=0,j=files.length; i<j; i++)
+			fileNames.push(files[i].serverName);
+		return fileNames;
+	}
+</script>
+<!-- /图片上传 -->

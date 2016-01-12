@@ -1,5 +1,7 @@
 package com.loiot.baqi.pojo;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,8 +32,9 @@ public class TgSuggestBugInfo  implements java.io.Serializable{
 	    private Integer sugType;  //1 bug 2建议 db_column: sug_type 
 	    private java.util.Date updateTime;  //更新时间 db_column: update_time 
 	    private java.lang.Long updatePerson;  //更新人 db_column: update_person 
+	    private String updatePersonName;  //更新人名称 db_column: update_person 
 
-	  private java.lang.String inPersonName;
+	    private java.lang.String inPersonName;
 
 	public TgSuggestBugInfo(){
 	}

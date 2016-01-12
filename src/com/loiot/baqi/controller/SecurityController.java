@@ -129,9 +129,7 @@ public class SecurityController {
         	subject.getSession().removeAttribute(Const.SHIRO_SESSION_USER_KEY);
         }
         subject.getSession().setAttribute(Const.SHIRO_SESSION_USER_KEY, account);
-        IndexInfoSingleTon indexInfo = IndexInfoSingleTon.getInstance();
-		Map<String, List> infoMap = indexInfo.getIndexInfoMap();  //  得到Map集合
-		infoMap.put(Const.SESSION_DICTIONARYS_KEY, zpDictionaryInfoService.queryZpDictionaryInfoList(new HashMap()));
+        
         return AjaxResponse.OK;
     }
 

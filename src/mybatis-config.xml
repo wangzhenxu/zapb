@@ -21,20 +21,7 @@
 		<typeAlias type="com.timeloit.pojo.Role" alias="Role" />
 		<typeAlias type="com.timeloit.pojo.Account" alias="Account" />
 		<typeAlias type="com.timeloit.pojo.Permission" alias="Permission" />
-		<typeAlias type="com.loiot.baqi.pojo.ZpDictionaryInfo" alias="ZpDictionaryInfo" />
-		<typeAlias type="com.loiot.baqi.pojo.ZpCompanyInfo" alias="ZpCompanyInfo" />
-		<typeAlias type="com.loiot.baqi.pojo.AccountExpandInfo" alias="AccountExpandInfo" />
-	    
 	    <typeAlias type="com.loiot.baqi.vo.JlAuditPersonList" alias="JlAuditPersonList" />
-	    <typeAlias type="com.loiot.baqi.pojo.TgSuggestBugInfo" alias="TgSuggestBugInfo" />
-	    
-		
-		
-		
-		
-		
-		
-		
 	</typeAliases>
 	
 	<!-- 配置分页拦截器 -->

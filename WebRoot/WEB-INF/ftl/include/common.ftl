@@ -6,6 +6,11 @@
 <script src="/js/hiAlert/jquery.alert.js"></script>
 <script src="/js/jquery/jquery.placeholder.js"></script>
 
+<!-- 文本编辑器 -->
+<link rel="stylesheet" href="/kindeditor-4.1.10/themes/default/default.css" />
+<script charset="utf-8" src="/kindeditor-4.1.10/kindeditor-min.js"></script>
+<script charset="utf-8" src="/kindeditor-4.1.10/lang/zh_CN.js"></script>
+
 
 <link href="/css/alert.css" rel="stylesheet" type="text/css" />
 

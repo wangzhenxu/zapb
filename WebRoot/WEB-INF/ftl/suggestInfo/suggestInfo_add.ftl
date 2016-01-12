@@ -23,115 +23,100 @@
     <tr>
            <td  align="right" class="hui1">用户类型 ：</td>
            <td  align="left" valign="middle">
-          	
-          	
+           
+            <#list AccountType.values() as c>
+              <input class="radio" name="accountType" type="radio" value="${c.code}" > ${c.title}
+ 			</#list>
+           
+            
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1"><span class="red">*</span>项目类型 ：</td>
            <td  align="left" valign="middle">
-          	
-          	
+          	简历宝
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1"><span class="red">*</span>当前访问的url ：</td>
            <td  align="left" valign="middle">
-          			 <textarea  cols="45" rows="5" class="input validate[required,length[1000] text-input mokuainr ckeditor" name="currentUrl"  id="currentUrl" ></textarea>
-          	
-          	
+          		<input type="text" class="input validate[required]" name="currentUrl"  style="width:570px;" id="currentUrl">
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1"><span class="red">*</span>标题 ：</td>
            <td  align="left" valign="middle">
-          	   			<input name="title" id="title" type="text" class="input  validate[required] ">
-          	
-          	
+          	 <input name="title" id="title" type="text" class="input  validate[required] " style="width:570px;">
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1"><span class="red">*</span>内容 ：</td>
            <td  align="left" valign="middle">
-          			 <textarea  cols="45" rows="5" class="input validate[required,length[1000] text-input mokuainr ckeditor" name="content"  id="content" ></textarea>
-          	
-          	
+          	 <textarea  style="width:300px;height:400px;visibility:hidden;"  name="sug_content" id="sug_content"></textarea>
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1">用户所在地 ：</td>
            <td  align="left" valign="middle">
-          	   			<input name="address" id="address" type="text" class="input ">
-          	
-          	
+          	  <input name="address" id="address" type="text" class="input ">
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1">浏览器类型和版本 ：</td>
            <td  align="left" valign="middle">
-          	   			<input name="agent" id="agent" type="text" class="input ">
-          	
-          	
+          	  <input name="agent" id="agent" type="text" class="input ">
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1">用户使用的操作系统 ：</td>
            <td  align="left" valign="middle">
-          			 <textarea  cols="45" rows="5" class="input validate[required,length[1000] text-input mokuainr ckeditor" name="userOs"  id="userOs" ></textarea>
-          	
-          	
+          	   <input name="userOs"  id="userOs"  type="text" class="input  validate[required] " style="width:570px;">
            </td>
      </tr>
      
     <tr>
            <td  align="right" class="hui1">操作类型 ：</td>
            <td  align="left" valign="middle">
-          	
-          	
+          	  <#list DictionaryUtil.getTypes(DictionaryType.SUGGEST_OPERATOR_STATUS.getCode()) as c>
+             	 <input class="radio" name="operationType" type="radio" value="${c.dictionaryId}" > ${c.name!''}
+ 			 </#list>
            </td>
      </tr>
      
-    <tr>
-           <td  align="right" class="hui1">录入人 ：</td>
-           <td  align="left" valign="middle">
-		 		 <#list DictionaryUtil.getTypes(DictionaryType.ENGLISH_LEVEL.getCode()) as c>
-		          	 	<input class="radio" name="{column.columnNameLower}" type="radio" value="${c.dictionaryId}" > ${c.showName!''} 
-	          	 </#list> 
-          	
-          	
+      <tr style="display:none;" class="_detail">
+           <td  align="right" class="hui1">录入人：</td>
+           <td  align="left" valign="middle"  colspan="3" id="inPersonName">
            </td>
      </tr>
      
-    <tr>
-           <td  align="right" class="hui1">录入时间 ：</td>
-           <td  align="left" valign="middle">
-          	
-          	   <input name="inTime" id="inTime" type="text" onClick="WdatePicker({dateFmt:'yyyy-MM'})" >
-          	
+    <tr style="display:none;" class="_detail">
+           <td  align="right" class="hui1">录入时间：</td>
+           <td  align="left" valign="middle" colspan="3" id="inTime">
+           </td>
+         </tr>    
+	  
+         
+         <tr style="display:none;" class="_detail">
+           <td  align="right" class="hui1">录入人：</td>
+           <td  align="left" valign="middle"  colspan="3" id="updatePersonName">
            </td>
      </tr>
+      <tr style="display:none;" class="_detail">
+           <td  align="right" class="hui1">录入时间：</td>
+           <td  align="left" valign="middle" colspan="3" id="updateTime">
+           </td>
+         </tr>    
+	   
      
-    <tr>
-           <td  align="right" class="hui1">1 bug 2建议 ：</td>
-           <td  align="left" valign="middle">
-          	
-          	
-           </td>
-     </tr>
-         
-         
-         
-        
-         
-         
-         </table>
+     
+     </table>
 
      </div>
     </div>
@@ -149,5 +134,18 @@
 <script src="/js/suggestInfo.js"></script>
 <script>
 	suggestInfo.initPage();
+	//$(".ke-container-default").css({"width":"475px"});
+	editor = KindEditor.create('textarea[name="sug_content"]',{
+	//allowPreviewEmoticons : false,
+	 uploadJson : '/file/kindEditorUplad.action', //上传
+	 fileManagerJson : 'file_manager.do', // 文件管理
+	 allowFileManager : true,
+	items : [
+			'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+			'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+			'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+	});
+	
+	
 </script>
 

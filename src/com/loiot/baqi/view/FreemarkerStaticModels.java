@@ -9,6 +9,7 @@ package com.loiot.baqi.view;
  * 在freemarker中使用java静态类
  * @creation 2012-11-8
  */
+import java.io.File;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
@@ -43,6 +44,7 @@ public class FreemarkerStaticModels extends HashMap<Object, Object> {
             for (String key : keys) {
                 FREEMARKER_STATIC_MODELS.put(key, useStaticPackage(this.staticModels.getProperty(key)));
             }
+            loadAllEnumClass();
         }
     }
 
@@ -56,5 +58,25 @@ public class FreemarkerStaticModels extends HashMap<Object, Object> {
             e.printStackTrace();
         }
         return null;
+    }
+    /**
+     * 加载项目所有枚举类不用每次，添加到freearker-static.properties文件中
+     */
+    public static void loadAllEnumClass(){
+    	String classDic="com/loiot/baqi/status";
+	    	String enumDirct = FreemarkerStaticModels.class.getClassLoader().getResource("").getPath()+classDic;
+	    	//System.out.println(enumDirct);
+	    	 File file=new File(enumDirct);
+	    	  File[] tempList = file.listFiles();
+	    	  //System.out.println("该目录下对象个数："+tempList.length);
+	    	  for (int i = 0; i < tempList.length; i++) {
+	    	   if (tempList[i].isFile()) {
+	    		  String classKey = tempList[i].getName().replace(".class", "");
+	    		  String classValue = classDic.replaceAll("/", ".")+"."+classKey;
+	              FREEMARKER_STATIC_MODELS.put(classKey, useStaticPackage(classValue));
+	    		  //System.out.println("文     件key："+classKey);
+	    		  //System.out.println("文     件value："+useStaticPackage(classValue));
+	    	   }
+	    }
     }
 }

@@ -1,7 +1,7 @@
 //建议
 var suggestInfo = {
 	//请求url
-	listUrl:"/tgSuggestBugInfo/list.action", //列表地址
+	listUrl:"/tgSuggestBugInfo/suggestList.action", //列表地址
 	toAddUrl:"/tgSuggestBugInfo/toAdd.action", //去添加页面地址
 	addUrl:"/tgSuggestBugInfo/add.action", //添加地址
 	toEditUrl:"/tgSuggestBugInfo/toEdit.action?id=", //去修改页面地址
@@ -39,6 +39,8 @@ var suggestInfo = {
 	inTime : $("#inTime"), //录入时间
 	sugType : $("#sugType"), //1 bug 2建议
 	inPersonName : $("#inPersonName"),
+	updateTime : $("#updateTime"), //录入时间
+	updatePersonName : $("#updatePersonName"),
 	//页面初始化
 	initPage : function (){
 		var self = this;
@@ -54,7 +56,7 @@ var suggestInfo = {
 				self.add();
 			});
 		}
-		if(self.currPage=="list"){
+		if(location.href.indexOf("/suggestList.action")!=-1){
 			self.initSeletePage();
 		}else
 		if(self.currPage=="edit"){
@@ -70,7 +72,7 @@ var suggestInfo = {
 	initSeletePage : function (){
 		var self =this;
 		self.queryfrom.validationEngine({scroll:false});
-		self.queryBtn.unbind("click").unbind("click").click(function(){
+		self.queryBtn.unbind("click").click(function(){
 			self.query();
 		});
     },
@@ -94,12 +96,12 @@ var suggestInfo = {
 		location.href=this.toAddUrl;
 	},
 	 //跳转修改页面
-	toEdit : function (id){
-		location.href=this.toEditUrl +id;
+	toEdit : function (id,type){
+		location.href=this.toEditUrl +id+"&type="+type;
    },
    //跳转详情页面
-   toDetail : function (id){
-		location.href=this.toViewUrl+id;
+   toDetail : function (id,type){
+		location.href=this.toViewUrl+id+"&type="+type;
 	},
 	//初始化添加页面
 	initAddPage : function (){
@@ -172,6 +174,12 @@ var suggestInfo = {
 		self.getById(this.suggestId.val(),function (result){
 			if (result.s > 0) {
 				self.setForm(result.data);
+				$("input").attr("disabled",true);
+				$("input[name=operationType]").attr("disabled",false);
+				$("input[name=suggestId]").attr("disabled",false);
+
+				editor.readonly();
+
 			}//不存在
 			else if (result.s==-1000) {
 				location.href = common.notFindUrl;
@@ -234,26 +242,32 @@ var suggestInfo = {
 		self.suggestId.val(obj.suggestId); //主键
 		
 		//用户详情显示信息
-		self.accountType.val(obj.accountType); //用户类型
-		self.projectType.val(obj.projectType); //项目类型
+		$("input[name='accountType'][value='"+obj.accountType+"']").attr("checked",true); //用户类型
+		$("input[name='projectType'][value='"+obj.projectType+"']").attr("checked",true); //项目类型
 		self.currentUrl.val(obj.currentUrl); //当前访问的url
 		self.title.val(obj.title); //标题
-		self.content.val(obj.content); //内容
+		editor.html(obj.content);
 		self.address.val(obj.address); //用户所在地
 		self.agent.val(obj.agent); //浏览器类型和版本
 		self.userOs.val(obj.userOs); //用户使用的操作系统
 		self.operationType.val(obj.operationType); //操作类型
 		self.inPerson.html(obj.inPerson);
-			
+		$("input[name='operationType'][value='"+obj.operationType+"']").attr("checked",true); //操作类型
 		//其它属性
 		if(obj.inTime && obj.inTime>0){
 		  var new1 = new Date(obj.inTime).format("yyyy-MM-dd HH:mm");
 		  self.inTime.html(new1); //录入时间
 		}
+		if(obj.updateTime && obj.updateTime>0){
+		  var new1 = new Date(obj.updateTime).format("yyyy-MM-dd HH:mm");
+		  self.updateTime.html(new1); //录入时间
+		}
 			
 		//其它属性
 		self.sugType.val(obj.sugType); //1 bug 2建议
 		self.inPersonName.html(obj.inPersonName);
+		self.updatePersonName.html(obj.updatePersonName);
+
    },
    //检查名称唯一性
    checkNameExits : function (param,callBack){

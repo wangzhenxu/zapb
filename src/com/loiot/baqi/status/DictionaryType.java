@@ -62,7 +62,7 @@ public enum DictionaryType {
 	
 	SUGGEST_OPERATOR_STATUS(26, "建议状态"),
 	
-	BUG_OPERATOR_STATUS(26, "bug状态");
+	BUG_OPERATOR_STATUS(27, "bug状态");
 	
 
 

@@ -20,6 +20,8 @@
 	        	<result  column="sug_type" property="sugType" />
 	        	<result  column="update_time" property="updateTime" />
 	        	<result  column="update_person" property="updatePerson" />
+	        	<result  column="updatePersonName" property="updatePersonName" />
+	        	
 			<result  column="inPersonName" property="inPersonName" />
 	</resultMap>
 	
@@ -304,10 +306,12 @@
 			FROM
 			tg_suggest_bug_info  sbi
 			LEFT JOIN account a ON a.account_id =sbi.in_person
+			LEFT JOIN tg_account a2 ON a2.account_id =sbi.update_person
+			
 		<where>
 					<if test="qtype != null and qtype=='like'">
 						<if test="nameT != null and nameT !='' ">
-				        		AND sbi.name like '%${nameT}%' 
+				        		AND sbi.title like '%${nameT}%' 
 			        	</if>
 					</if>
 					  <if test="startTimeT != null and startTimeT !='' ">
@@ -386,6 +390,9 @@
 						 		sbi.update_time,
 						 		sbi.update_person
 								,a.username as inPersonName
+								,a2.username as updatePersonName
+								
+								
 	</sql>
 	
 	<!-- 统计sql -->
