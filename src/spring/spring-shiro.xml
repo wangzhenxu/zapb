@@ -22,18 +22,32 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/restapi.amap.com/**=anon
-               <!-- 客户 -->
-               /zpCompanyInfo/list.action=perms["zpCompanyInfo:list"]
-               /zpCompanyInfo/add.action=perms["zpCompanyInfo:add"]
-               /zpCompanyInfo/toAdd.action=perms["zpCompanyInfo:add"]
-               /zpCompanyInfo/modifyDeleteStatus.action=perms["zpCompanyInfo:disableAndEnabled"]
-               /zpCompanyInfo/edit.action=perms["zpCompanyInfo:edit"]
-               /zpCompanyInfo/toEdit.action=perms["zpCompanyInfo:edit"]
-               /zpCompanyInfo/toView.action=perms["zpCompanyInfo:detail"]
-               
+        <!-- 客户 -->
+        /zpCompanyInfo/list.action=perms["zpCompanyInfo:list"]
+        /zpCompanyInfo/add.action=perms["zpCompanyInfo:add"]
+        /zpCompanyInfo/toAdd.action=perms["zpCompanyInfo:add"]
+        /zpCompanyInfo/modifyDeleteStatus.action=perms["zpCompanyInfo:disableAndEnabled"]
+        /zpCompanyInfo/edit.action=perms["zpCompanyInfo:edit"]
+        /zpCompanyInfo/toEdit.action=perms["zpCompanyInfo:edit"]
+        /zpCompanyInfo/toView.action=perms["zpCompanyInfo:detail"]
 				/user/**.action = perms["user:list"]
 				
-				/** = authc
+				<!-- 商品管理-->
+				/tgProduct/list.action=perms["tgProduct:list"]
+				/tgProduct/toAdd.action=perms["tgProduct:add"]
+				/tgProduct/add.action=perms["tgProduct:add"]
+				/tgProduct/toEdit.action=perms["tgProduct:edit"]
+				/tgProduct/edit.action=perms["tgProduct:edit"]
+				/tgProduct/toView.action=perms["tgProduct:detail"]
+				/tgProduct/delete.action=perms["tgProduct:delete"]
+				/tgProduct/ajaxDelete.action=perms["tgProduct:delete"]
+        /tgProduct/modifyDeleteStatus.action=perms["tgProduct:disableAndEnabled"]
+				
+				<!-- 用户建议和用户bug -->
+				 /tgSuggestBugInfo/suggestList.action =perms["tgSuggestBugInfo:suggestList"] 
+				 /tgSuggestBugInfo/bugList.action=perms["tgSuggestBugInfo:bugList"]
+				 /** = authc
+				<!-- 建议 -->
 				
 			</value>
 		</property>

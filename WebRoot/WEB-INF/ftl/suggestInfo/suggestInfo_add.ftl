@@ -60,21 +60,21 @@
            </td>
      </tr>
      
-    <tr>
+    <tr style="display:none;">
            <td  align="right" class="hui1">用户所在地 ：</td>
            <td  align="left" valign="middle">
           	  <input name="address" id="address" type="text" class="input ">
            </td>
      </tr>
      
-    <tr>
+    <tr style="display:none;">
            <td  align="right" class="hui1">浏览器类型和版本 ：</td>
            <td  align="left" valign="middle">
           	  <input name="agent" id="agent" type="text" class="input ">
            </td>
      </tr>
      
-    <tr>
+    <tr style="display:none;">
            <td  align="right" class="hui1">用户使用的操作系统 ：</td>
            <td  align="left" valign="middle">
           	   <input name="userOs"  id="userOs"  type="text" class="input  validate[required] " style="width:570px;">

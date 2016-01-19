@@ -107,6 +107,7 @@ var companyInfo = {
 	add : function (){
 		var self = this;
 			var b = $('#addform').validationEngine('validate');
+			console.log(b);
 			if(!b){
 				return false;
 			}

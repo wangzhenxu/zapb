@@ -71,19 +71,33 @@ function menuClick(){
      </#if>
      
      
-     	 <!-- 用户建议管理 -->
-     	<div class="MenuLevel1"> 用户建议管理 <span><img src="/images/<#if d>2<#else>1</#if>.gif" border="0"/></span></div>
-     		<div class="<#if d>SubMenuLayerHidden</#if> SubMenu">
-      			<a class="MenuLevel4 editPassword" href="/tgSuggestBugInfo/suggestList.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgSuggestBugInfo_suggestList">用户建议管理</span></a>
-     	</div>
+        <#if subject.isPermitted("tgSuggestBugInfo:suggestList")>
+     	 	<!-- 用户建议管理 -->
+     		<div class="MenuLevel1"> 用户建议管理 <span><img src="/images/<#if d>2<#else>1</#if>.gif" border="0"/></span></div>
+     			<div class="SubMenu">
+      				<a class="MenuLevel4" href="/tgSuggestBugInfo/suggestList.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgSuggestBugInfo_suggestList">用户建议管理</span></a>
+     		   </div>
+     	</#if>
      	
+     	<#if subject.isPermitted("tgSuggestBugInfo:bugList")>
      	 <!-- 用户bug管理 -->
-     	<div class="MenuLevel1"> 用户bug管理 <span><img src="/images/<#if d>2<#else>1</#if>.gif" border="0"/></span></div>
-     		<div class="<#if d>SubMenuLayerHidden</#if> SubMenu">
-      			<a class="MenuLevel4 editPassword" href="/tgSuggestBugInfo/bugList.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgSuggestBugInfo_bugList">用户bug管理</span></a>
-     	</div>
-    
-     
+     		<div class="MenuLevel1"> 用户bug管理 <span><img src="/images/1.gif" border="0"/></span></div>
+     			<div class="SubMenu">
+      			<a class="MenuLevel4" href="/tgSuggestBugInfo/bugList.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgSuggestBugInfo_bugList">用户bug管理</span></a>
+     		</div>
+   		 </#if>
+   		 
+	     <!-- 商品管理 -->
+	     <#if subject.isPermitted("tgProduct:list") ||subject.isPermitted("tgProduct:add") ||subject.isPermitted("tgProduct:edit")>  <#--tgProduct:list  -->
+	     		<div class="MenuLevel1"> 商品列表<span><img src="/images/1.gif" border="0"/></span></div>
+	     			<#if subject.isPermitted("tgProduct:list")>  <#--tgProduct:list  -->
+	      			<a class="MenuLevel4" href="/tgProduct/list.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgProduct_list">商品列表</span></a>
+	     			</#if>
+	     			<#if subject.isPermitted("tgProduct:add")>  <#--tgProduct:add  -->
+	      			<a class="MenuLevel4" href="/tgProduct/toAdd.action"> <img src="/images/bullet_sarrow.gif"/> &nbsp;&nbsp;<span id="tgProduct_add">添加商品</span></a>
+	     			</#if>
+	     </#if>
+	     
     </div>
 	</div>
    <#--主体内容-->

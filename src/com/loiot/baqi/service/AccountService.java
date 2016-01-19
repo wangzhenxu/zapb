@@ -129,7 +129,7 @@ public class AccountService {
         expandInfo.setAuditPositionId(account.getAuditPositionId());
         
         //如果是选择技术评审类型，需要添加，技术评审开启状态
-        if(account.getType()==AccountType.TECHICAL_AUDIT.getCode()){
+        if(account.getType()==/*AccountType.TECHICAL_AUDIT.getCode()*/1){
             expandInfo.setIsAcceptAudit(DictionaryUtil.getCode(DictionaryType.ACCEPT_AUDIT.getCode(), "stop"));
         }
         accountExpandInfoDao.addAccountExpandInfo(expandInfo);
@@ -168,7 +168,7 @@ public class AccountService {
         //扩展信息
         AccountExpandInfo expandInfo = new AccountExpandInfo();
         expandInfo.setAccountId(account.getAccountId());
-        if(account.getType()!=AccountType.TECHICAL_AUDIT.getCode()){
+        if(account.getType()!=/*AccountType.TECHICAL_AUDIT.getCode()*/1){
         	expandInfo.setAuditPositionId(null);
         }else{
         	expandInfo.setAuditPositionId(account.getAuditPositionId());

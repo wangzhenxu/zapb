@@ -105,18 +105,6 @@
            </td>
          </tr>
          
-          <#if Session[Const.SESSION_USER_KEY].type==AccountType.TECHICAL_AUDIT.getCode()>
-         <tr>
-           <td  align="right" class="hui1">状态：</td>
-           <td  align="left" valign="middle" colspan="3">
-          		<#list DictionaryUtil.getTypes(DictionaryType.ACCEPT_AUDIT.getCode()) as c>
-	          	 	<input class="radio" name="isAcceptAudit" id="isAcceptAudit" type="radio" value="${c.dictionaryId}" > ${c.showName!''} 
-	          	 </#list>
-	          	 <span class="hui1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（忙的时候可以暂停哦）</span>
-           </td>
-         </tr>
-         </#if>
-         
           <tr>
            <td  align="right" class="hui1">当前余额：</td>
            <td  align="left" valign="middle" colspan="3">

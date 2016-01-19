@@ -13,23 +13,9 @@ package com.loiot.baqi.status;
  */
 public enum AccountType {
 
-	HR(1, "HR"),
-	
-	TECHICAL_AUDIT(2,"技术评审"),
-	
-	ADMIN(3, "后台管理员"),
-	
-	JOB_HUNTER(4, "求职者"),
-	
-	SALARY_MANAGER(5,"薪水管理员"),
-	
-	HEAD_HUNTING_MANAGER(6,"猎头顾问"),
-	
-	COMPANY_INTERFACER(7,"企业对接人"),
-	
-	TG_SUGGEST_MANAGER(8,"推广系统-产品经理"),
-	
-	TG_BUG_MANAGER(9,"推广系统-测试经理");
+	TESTING(1, "测试"),
+	PRODUCT_MANAGER(2,"产品"),
+	ADMIN(3,"管理员");
 
 	
 

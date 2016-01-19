@@ -62,13 +62,11 @@ public enum DictionaryType {
 	
 	SUGGEST_OPERATOR_STATUS(26, "建议状态"),
 	
-	BUG_OPERATOR_STATUS(27, "bug状态");
+	BUG_OPERATOR_STATUS(27, "bug状态"),
 	
-
-
+    PRODUCT_CATEGORY(28, "产品分类"),
 	
-	
-
+    PRODUCT_ORIGIN(29, "产品来源");
 	
 	/**
 	 * 状态码

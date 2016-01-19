@@ -79,7 +79,7 @@ public class AccountExpandInfoController {
 		if (subject.isPermitted("zpJlInfo:list")) {
 			
 		}*/
-    	if(UserSessionUtils.getAccountType()==AccountType.ADMIN.getCode()|| UserSessionUtils.getAccountType()==AccountType.HEAD_HUNTING_MANAGER.getCode() || UserSessionUtils.getAccountType()==AccountType.SALARY_MANAGER.getCode() ){
+    	if(UserSessionUtils.getAccountType()==AccountType.ADMIN.getCode() ){
     	} else {
     		return URLConst.ERROR_URL;
     	}
@@ -271,7 +271,7 @@ public class AccountExpandInfoController {
     public Object ajaxGetById(@RequestParam(value = "id", required = true) java.lang.Long id)throws Exception {
     	HashMap<String,Object> pmap = new HashMap<String,Object>();
     	pmap.put("expandId", id);
-    	if(UserSessionUtils.getAccountType()==AccountType.ADMIN.getCode()|| UserSessionUtils.getAccountType()==AccountType.HEAD_HUNTING_MANAGER.getCode() || UserSessionUtils.getAccountType()==AccountType.SALARY_MANAGER.getCode() ){
+    	if(UserSessionUtils.getAccountType()==AccountType.ADMIN.getCode() ){
     		
     	} else {
     		pmap.put("accountId", UserSessionUtils.getAccount().getAccountId());

@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+/*list style*/
+.query_content{display: block; width: 100%;}
+.query_item{display: inline-block; width: 30%; height: 25px; padding-top: 5px;}
+.query_item .q-title{font-size: 16px; margin-right: 5px;}
+.query_item .input-2{width: 75px;}
+.query_item select{width: 160px; height: 25px; border: 1px solid #cecece; font-size: 12px; background: #FFFFFF; line-height: 22px;}
+.query_item .input-radio{width: 20px; height: 20px; vertical-align: bottom;}
+.query_bottom{display: block; width: 100%; text-align: right; }
+.query_bottom button{ margin-right: 50px; }
+/*add style*/
+.add_item{margin-top: 10px;}
+.add_item input{padding-left: 3px;}
+.add_item select{width: 160px; height: 25px; padding-left: 3px; border: 1px solid #cecece; font-size: 12px; background: #FFFFFF; line-height: 22px;}
+.info{clear: both; padding: 15px 20px 10px 30px; }
+.info .item{display: block; padding-top: 10px; }
+.info .item span:first-child{display: inline-block; text-align: right; width: 60px;}

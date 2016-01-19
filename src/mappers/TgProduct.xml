@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TgProduct">
+
+	<resultMap type="TgProduct" id="tgProductMap">
+	        	<id  column="id" property="id"></id>
+	        	<result  column="category" property="category" />
+	        	<result  column="name" property="name" />
+	        	<result  column="price" property="price" />
+	        	<result  column="unit" property="unit" />
+	        	<result  column="origin" property="origin" />
+	        	<result  column="origin_url" property="originUrl" />
+	        	<result  column="remark" property="remark" />
+	        	<result  column="is_delete" property="isDelete" />
+	        	<result  column="in_person" property="inPerson" />
+	        	<result  column="in_time" property="inTime" />
+	        	<result  column="update_person" property="updatePerson" />
+	        	<result  column="udpate_time" property="udpateTime" />
+						<result  column="inPersonName" property="inPersonName" />
+						<result  column="updatePersonName" property="updatePersonName" />
+	</resultMap>
+	
+	<!-- 查询 建议列表 -->
+	<select id="queryTgProductList" resultMap="tgProductMap">
+		SELECT
+			<include refid="getParamSQL"></include>
+			<include refid="getListSQL"></include>
+		ORDER BY 
+   	<if test="sort != null and sort =='in_time'">
+   		in_time,
+   	</if>
+		<if test="sort != null and sort == 'price'">
+   		price,
+   	</if>
+		p.id desc 
+		<if test="skipResults!=null">
+				limit #{skipResults} ,#{maxResults}
+		</if>
+		
+	</select>
+	
+	<!-- 查询 建议列表条数 -->
+	<select id="getTgProductListCount" resultType="int">
+		SELECT
+			count(1)
+			<include refid="getListSQL"></include>
+	</select>
+	
+	
+	<!-- 添加 建议 -->
+	<insert id="addTgProduct" flushCache="true" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO tg_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+							<if test="id != null">
+		        		id,
+		        	</if>
+		        	<if test="category != null">
+		        		category,
+		        	</if>
+		        	<if test="name != null">
+		        		name,
+		        	</if>
+		        	<if test="price != null">
+		        		price,
+		        	</if>
+		        	<if test="unit != null">
+		        		unit,
+		        	</if>
+		        	<if test="origin != null">
+		        		origin,
+		        	</if>
+		        	<if test="originUrl != null">
+		        		origin_url,
+		        	</if>
+		        	<if test="remark != null">
+		        		remark,
+		        	</if>
+		        	<if test="isDelete != null">
+		        		is_delete,
+		        	</if>
+		        	<if test="inPerson != null">
+		        		in_person,
+		        	</if>
+		        	<if test="inTime != null">
+		        		in_time,
+		        	</if>
+		        	<if test="updatePerson != null">
+		        		update_person,
+		        	</if>
+		        	<if test="udpateTime != null">
+		        		udpate_time,
+		        	</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+								<if test="id != null">
+			        		#{id},
+			        	</if>
+			        	<if test="category != null">
+			        		#{category},
+			        	</if>
+			        	<if test="name != null">
+			        		#{name},
+			        	</if>
+			        	<if test="price != null">
+			        		#{price},
+			        	</if>
+			        	<if test="unit != null">
+			        		#{unit},
+			        	</if>
+			        	<if test="origin != null">
+			        		#{origin},
+			        	</if>
+			        	<if test="originUrl != null">
+			        		#{originUrl},
+			        	</if>
+			        	<if test="remark != null">
+			        		#{remark},
+			        	</if>
+			        	<if test="isDelete != null">
+			        		#{isDelete},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		#{inPerson},
+			        	</if>
+			        	<if test="inTime != null">
+			        		#{inTime},
+			        	</if>
+			        	<if test="updatePerson != null">
+			        		#{updatePerson},
+			        	</if>
+			        	<if test="udpateTime != null">
+			        		#{udpateTime},
+			        	</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改 建议 -->
+	<update id="updateTgProduct" >
+		UPDATE  tg_product
+		<trim prefix="set" suffixOverrides=",">
+			        	<if test="category != null">
+			        		category=#{category},
+			        	</if>
+			        	<if test="name != null">
+			        		name=#{name},
+			        	</if>
+			        	<if test="price != null">
+			        		price=#{price},
+			        	</if>
+			        	<if test="unit != null">
+			        		unit=#{unit},
+			        	</if>
+			        	<if test="origin != null">
+			        		origin=#{origin},
+			        	</if>
+			        	<if test="originUrl != null">
+			        		origin_url=#{originUrl},
+			        	</if>
+			        	<if test="remark != null">
+			        		remark=#{remark},
+			        	</if>
+			        	<if test="isDelete != null">
+			        		is_delete=#{isDelete},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		in_person=#{inPerson},
+			        	</if>
+			        	<if test="inTime != null">
+			        		in_time=#{inTime},
+			        	</if>
+			        	<if test="updatePerson != null">
+			        		update_person=#{updatePerson},
+			        	</if>
+			        	<if test="udpateTime != null">
+			        		udpate_time=#{udpateTime},
+			        	</if>
+		</trim>
+		WHERE id=#{id}
+	</update>
+	
+	
+	<!-- 修改 建议byMAP -->
+	<update id="updateTgProductbyMAP" >
+		UPDATE  tg_product
+		<trim prefix="set" suffixOverrides=",">
+			        	<if test="category != null">
+			        		category=#{category},
+			        	</if>
+			        	<if test="name != null">
+			        		name=#{name},
+			        	</if>
+			        	<if test="price != null">
+			        		price=#{price},
+			        	</if>
+			        	<if test="unit != null">
+			        		unit=#{unit},
+			        	</if>
+			        	<if test="origin != null">
+			        		origin=#{origin},
+			        	</if>
+			        	<if test="originUrl != null">
+			        		origin_url=#{originUrl},
+			        	</if>
+			        	<if test="remark != null">
+			        		remark=#{remark},
+			        	</if>
+			        	<if test="isDelete != null">
+			        		is_delete=#{isDelete},
+			        	</if>
+			        	<if test="inPerson != null">
+			        		in_person=#{inPerson},
+			        	</if>
+			        	<if test="inTime != null">
+			        		in_time=#{inTime},
+			        	</if>
+			        	<if test="updatePerson != null">
+			        		update_person=#{updatePerson},
+			        	</if>
+			        	<if test="udpateTime != null">
+			        		udpate_time=#{udpateTime},
+			        	</if>
+		</trim>
+		WHERE 1=1
+		<if test="qtype != null and qtype=='one'">
+		</if>
+	</update>
+
+	<!-- 删除  建议 -->
+	<delete id="deleteTgProduct">
+		DELETE FROM tg_product 
+		<where>
+			1=1
+				        	<if test="id != null">
+				        		AND id=#{id} 
+				        	</if>
+				        	<if test="category != null">
+				        		AND category=#{category} 
+				        	</if>
+				        	<if test="name != null">
+				        		AND name=#{name} 
+				        	</if>
+				        	<if test="price != null">
+				        		AND price=#{price} 
+				        	</if>
+				        	<if test="unit != null">
+				        		AND unit=#{unit} 
+				        	</if>
+				        	<if test="origin != null">
+				        		AND origin=#{origin} 
+				        	</if>
+				        	<if test="originUrl != null">
+				        		AND origin_url=#{originUrl} 
+				        	</if>
+				        	<if test="remark != null">
+				        		AND remark=#{remark} 
+				        	</if>
+				        	<if test="isDelete != null">
+				        		AND is_delete=#{isDelete} 
+				        	</if>
+				        	<if test="inPerson != null">
+				        		AND in_person=#{inPerson} 
+				        	</if>
+				        	<if test="inTime != null">
+				        		AND in_time=#{inTime} 
+				        	</if>
+				        	<if test="updatePerson != null">
+				        		AND update_person=#{updatePerson} 
+				        	</if>
+				        	<if test="udpateTime != null">
+				        		AND udpate_time=#{udpateTime} 
+				        	</if>
+		</where>
+	</delete>
+	
+	<!-- 获得  建议 -->
+	<select id="getTgProductById" resultMap="tgProductMap">
+		SELECT
+			<include refid="getParamSQL"></include>
+			<include refid="getListSQL"></include>
+		
+	</select>
+	
+	<!-- getListSQL -->
+	<sql id="getListSQL">
+			FROM
+			tg_product  p
+			LEFT JOIN account a ON a.account_id =p.in_person 
+			LEFT JOIN account b ON b.account_id =p.update_person 
+		<where>
+					<if test="qtype != null and qtype=='like'">
+						<if test="nameT != null and nameT !='' ">
+				        		AND p.name like '%${nameT}%' 
+			        	</if>
+					</if>
+					  <if test="startTimeT != null and startTimeT !='' ">
+				      	<![CDATA[ AND (ji.in_time>#{startTimeT} AND ji.in_time<#{endTimeT}  ) ]]>	
+				 	 </if>
+				        	<if test="id != null and id !='' ">
+				        		AND p.id=#{id} 
+				        	</if>
+				        	<if test="category != null and category !='' ">
+				        		AND p.category=#{category} 
+				        	</if>
+				        	<if test="name != null and name !='' ">
+				        		AND p.name=#{name} 
+				        	</if>
+				        	<if test="start_price != null and start_price !='' ">
+				        		AND p.price &gt;= #{start_price} 
+				        	</if>
+				        	<if test="end_price != null and end_price !='' ">
+				        		AND p.price &lt;=  #{end_price} 
+				        	</if>
+				        	<if test="unit != null and unit !='' ">
+				        		AND p.unit=#{unit} 
+				        	</if>
+				        	<if test="origin != null and origin !='' ">
+				        		AND p.origin=#{origin} 
+				        	</if>
+				        	<if test="originUrl != null and originUrl !='' ">
+				        		AND p.origin_url=#{originUrl} 
+				        	</if>
+				        	<if test="remark != null and remark !='' ">
+				        		AND p.remark=#{remark} 
+				        	</if>
+				        	<if test="isDelete != null and isDelete !='' ">
+				        		AND p.is_delete=#{isDelete} 
+				        	</if>
+				        	<if test="inPerson != null and inPerson !='' ">
+				        		AND p.in_person=#{inPerson} 
+				        	</if>
+				        	<if test="inTime != null and inTime !='' ">
+				        		AND p.in_time=#{inTime} 
+				        	</if>
+				        	<if test="updatePerson != null and updatePerson !='' ">
+				        		AND p.update_person=#{updatePerson} 
+				        	</if>
+				        	<if test="udpateTime != null and udpateTime !='' ">
+				        		AND p.udpate_time=#{udpateTime} 
+				        	</if>
+					
+					<if test="ids !=null">
+				         AND p.id IN
+						    <foreach  item="item" collection="ids"  index="index" open="(" separator="," close=")"> 
+									 ${item} 
+							</foreach>
+			        </if>
+		</where>
+	</sql>
+	
+	<!-- sql 参数 -->
+	<sql id="getParamSQL">
+						 		p.id,
+						 		p.category,
+						 		p.name,
+						 		p.price,
+						 		p.unit,
+						 		p.origin,
+						 		p.origin_url,
+						 		p.remark,
+						 		p.is_delete,
+						 		p.in_person,
+						 		p.in_time,
+						 		p.update_person,
+						 		p.udpate_time,
+						 		a.username as inPersonName,
+						 		b.username as updatePersonName
+	</sql>
+	
+	<!-- 统计sql -->
+	<select id="statisticsTgProductInfo" resultType="HashMap">
+		<if test="qtype != null and qtype=='one'">
+		</if>
+		<if test="qtype != null and qtype=='two'">
+		</if>
+	</select>
+	
+	<!-- 统计sql -->
+	<select id="getProductMaxId" resultType="long">
+		SELECT max(id) FROM tg_product;
+	</select>
+</mapper>
+

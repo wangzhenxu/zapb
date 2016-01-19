@@ -20,7 +20,7 @@ var suggestInfo = {
 	queryfrom :jQuery("#queryForm"), //查询form
 	addBtn : $("#addBtn"),//添加按钮
 	queryBtn : $("#queryBtn"),//查询按钮
-	left_menu_selected_id : "tgSuggestBugInfo_list",   //左侧菜单选择id  
+	left_menu_selected_id : "tgSuggestBugInfo_suggestList",   //左侧菜单选择id  
 
 
 	//属性
@@ -45,6 +45,10 @@ var suggestInfo = {
 	initPage : function (){
 		var self = this;
 		self.currPage = common.getCurrPageFlag();
+		if(location.href.indexOf("/suggestList.action")!=-1){
+			self.currPage="list";
+			self.m_title.html(self._title_val+"管理");
+		}
 		common.initLeftMenuSelected(self.left_menu_selected_id);
 
 		//初始化标题
@@ -56,7 +60,7 @@ var suggestInfo = {
 				self.add();
 			});
 		}
-		if(location.href.indexOf("/suggestList.action")!=-1){
+		if(self.currPage=="list"){
 			self.initSeletePage();
 		}else
 		if(self.currPage=="edit"){
