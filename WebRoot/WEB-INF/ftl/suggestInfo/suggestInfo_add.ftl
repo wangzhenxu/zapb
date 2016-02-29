@@ -7,7 +7,7 @@
 <!-- 右侧 开始 -->
 <div class="right">
     <div class="location">
-     <div class="location01">您现在的位置是：首页 &gt; <a href="javascript:suggestInfo.tolist();">CMS发布管理</a> &gt; 系统发布 &gt;<strong class="m_title" > 添加建议</strong></div>
+     <div class="location01">您现在的位置是：首页 &gt; <a href="javascript:suggestInfo.tolist();">用户建议管理</a>  &gt;<strong class="m_title" > 添加建议</strong></div>
     </div>
     <div class="nav">
      <div class="basic">
@@ -24,7 +24,7 @@
            <td  align="right" class="hui1">用户类型 ：</td>
            <td  align="left" valign="middle">
            
-            <#list AccountType.values() as c>
+            <#list PlatAccountType.values() as c>
               <input class="radio" name="accountType" type="radio" value="${c.code}" > ${c.title}
  			</#list>
            

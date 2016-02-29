@@ -33,7 +33,9 @@ public class ZpCompanyInfo  implements java.io.Serializable{
 	    private java.lang.String coordX;  //坐标x db_column: coord_x 
 	    private java.lang.String coordY;  //坐标y db_column: coord_y 
 	    private java.lang.Long areaId;  //公司所在城区 db_column: area_id 
-	    private java.lang.String inPersonName;   
+	    private java.lang.String inPersonName;
+	    
+	    
 
 	public ZpCompanyInfo(){
 	}

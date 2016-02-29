@@ -9,7 +9,7 @@
 	<body>
 	<div class="right">
     <div class="location">
-     <div class="location01">您现在的位置是：首页 &gt; <strong class="m_title"></strong></div>
+     <div class="location01">您现在的位置是：首页 &gt;  用户bug管理 &gt;<strong class="m_title" > </strong></div>
     </div>
     <div class="sort">
      <div class="sort1 m_title" ></div>
@@ -26,7 +26,7 @@
 			       	<span class="classify">用户类型：</span>
 			    	<select id="accountType" name="accountType">
 			    		 <option value="" > 请选择 </option>
-			    		      <#list AccountType.values() as c>
+			    		      <#list PlatAccountType.values() as c>
           				 			<option value="${c.code}" <#if  accountType?? && accountType!=''> <#if accountType?number==c.code> selected </#if> </#if>  > ${c.title!''} </option>
 			    	    	  </#list>
 			    	</select>
